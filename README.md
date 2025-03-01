@@ -2,6 +2,8 @@
 
 A simple, customizable Pomodoro timer application built with Godot.
 
+Mainly made for getting up every 20 mins (to follow the 20 min rule of looking away for 20 secs and even maintaining proper blood circ.)
+
 ## Features
 
 - Pomodoro technique timing with work sessions and breaks

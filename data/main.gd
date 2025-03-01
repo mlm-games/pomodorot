@@ -97,8 +97,10 @@ func _on_settings_button_pressed():
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		if Settings.minimize_to_tray_on_close:
-			#TODO: Implement tray functionality here
+			pass
+			#TODO: Implement tray functionality here and prevent window from quitting
 			# For now, just hide the window
-			hide()
+			#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+			#hide()
 		else:
 			get_tree().quit()
