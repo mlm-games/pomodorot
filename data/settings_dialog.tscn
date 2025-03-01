@@ -1,0 +1,198 @@
+[gd_scene load_steps=4 format=3 uid="uid://caujng1xfp8u3"]
+
+[ext_resource type="Script" uid="uid://ba32n6yrglwhf" path="res://data/settings_dialog.gd" id="1_8n4p2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pv8mf"]
+content_margin_left = 10.0
+content_margin_top = 28.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(0.249945, 0.200412, 0.453282, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 5
+expand_margin_left = 8.0
+expand_margin_top = 32.0
+expand_margin_right = 8.0
+expand_margin_bottom = 6.0
+
+[sub_resource type="Theme" id="Theme_ja8r2"]
+Window/styles/embedded_border = SubResource("StyleBoxFlat_pv8mf")
+
+[node name="SettingsDialog" type="Window"]
+title = "Settings"
+initial_position = 2
+size = Vector2i(400, 600)
+exclusive = true
+theme = SubResource("Theme_ja8r2")
+script = ExtResource("1_8n4p2")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "General Settings"
+horizontal_alignment = 1
+
+[node name="GeneralSettings" type="VBoxContainer" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AlwaysOnTopCheck" type="CheckButton" parent="Control/ScrollContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Always On Top"
+
+[node name="AutoStartWorkCheck" type="CheckButton" parent="Control/ScrollContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Auto-start Work Timer"
+
+[node name="AutoStartBreakCheck" type="CheckButton" parent="Control/ScrollContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Auto-start Break Timer"
+
+[node name="DesktopNotificationsCheck" type="CheckButton" parent="Control/ScrollContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Desktop Notifications"
+
+[node name="MinimizeToTrayCheck" type="CheckButton" parent="Control/ScrollContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Minimize to Tray"
+
+[node name="MinimizeOnCloseCheck" type="CheckButton" parent="Control/ScrollContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Minimize to Tray on Close"
+
+[node name="HSeparator" type="HSeparator" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sound Settings"
+horizontal_alignment = 1
+
+[node name="SoundSettings" type="VBoxContainer" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SoundEnabledCheck" type="CheckButton" parent="Control/ScrollContainer/VBoxContainer/SoundSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sound Enabled"
+
+[node name="TickSoundCheck" type="CheckButton" parent="Control/ScrollContainer/VBoxContainer/SoundSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tick Sound"
+
+[node name="HSeparator2" type="HSeparator" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Timer Settings"
+horizontal_alignment = 1
+
+[node name="TimerSettings" type="GridContainer" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="Control/ScrollContainer/VBoxContainer/TimerSettings"]
+layout_mode = 2
+text = "Work Duration (minutes):"
+
+[node name="WorkDurationSpin" type="SpinBox" parent="Control/ScrollContainer/VBoxContainer/TimerSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 120.0
+value = 25.0
+rounded = true
+
+[node name="Label2" type="Label" parent="Control/ScrollContainer/VBoxContainer/TimerSettings"]
+layout_mode = 2
+text = "Short Break (minutes):"
+
+[node name="ShortBreakSpin" type="SpinBox" parent="Control/ScrollContainer/VBoxContainer/TimerSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 30.0
+value = 5.0
+rounded = true
+
+[node name="Label3" type="Label" parent="Control/ScrollContainer/VBoxContainer/TimerSettings"]
+layout_mode = 2
+text = "Long Break (minutes):"
+
+[node name="LongBreakSpin" type="SpinBox" parent="Control/ScrollContainer/VBoxContainer/TimerSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 60.0
+value = 15.0
+rounded = true
+
+[node name="Label4" type="Label" parent="Control/ScrollContainer/VBoxContainer/TimerSettings"]
+layout_mode = 2
+text = "Long Break After (cycles):"
+
+[node name="LongBreakIntervalSpin" type="SpinBox" parent="Control/ScrollContainer/VBoxContainer/TimerSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 4.0
+rounded = true
+
+[node name="HSeparator3" type="HSeparator" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Control/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="Control/ScrollContainer/VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+text = "Save"
+
+[node name="CancelButton" type="Button" parent="Control/ScrollContainer/VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="Control/ScrollContainer/VBoxContainer/ButtonContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Control/ScrollContainer/VBoxContainer/ButtonContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

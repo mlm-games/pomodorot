@@ -1,0 +1,34 @@
+extends Node
+
+var work_finish_sound: AudioStreamOggVorbis = load(Settings.work_finish_sound_path)
+var break_finish_sound: AudioStreamOggVorbis = load(Settings.break_finish_sound_path)
+var tick_sound: AudioStreamOggVorbis = load(Settings.tick_sound_path)
+
+var audio_player: AudioStreamPlayer
+
+func _ready():
+	TimerManager.timer_finished.connect(_on_timer_finished)
+	TimerManager.timer_updated.connect(_on_timer_updated)
+	
+	audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+
+func _on_timer_finished(timer_type):
+	if Settings.sound_enabled and not TimerManager.silent_mode:
+		match timer_type:
+			TimerManager.TimerType.WORK:
+				if work_finish_sound:
+					audio_player.stream = work_finish_sound
+					audio_player.play()
+			TimerManager.TimerType.SHORT_BREAK, TimerManager.TimerType.LONG_BREAK:
+				if break_finish_sound:
+					audio_player.stream = break_finish_sound
+					audio_player.play()
+
+func _on_timer_updated(time_left, _total_time):
+	if Settings.sound_enabled and Settings.tick_sound_enabled and not TimerManager.silent_mode:
+		# Play tick sound at every full second
+		if fmod(time_left, 1.0) < 0.05 and time_left > 0:
+			if tick_sound:
+				audio_player.stream = tick_sound
+				audio_player.play()
