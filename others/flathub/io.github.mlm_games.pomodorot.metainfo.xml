@@ -56,7 +56,7 @@
       <url type="details">https://github.com/mlm-games/pomodorot/releases</url>
     </release>
   </releases>
-  <content_rating type="oars-1.1">
+  <content_rating type="oars-1.1"></content_rating>
   <developer_name>MLM Games</developer_name>
   <branding>
     <color type="primary" scheme_preference="light">#faa298</color>
