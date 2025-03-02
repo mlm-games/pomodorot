@@ -6,4 +6,4 @@ Exec=pomodorot
 Terminal=false
 Icon=io.github.mlm_games.pomodorot
 Type=Application
-Categories=System;Utilities;
+Categories=System;Utility;
