@@ -35,4 +35,5 @@ window/size/viewport_height=800
 
 [rendering]
 
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.121569, 0.14902, 0.266667, 1)
