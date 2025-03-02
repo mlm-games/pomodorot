@@ -93,8 +93,9 @@ jobs:
       contents: write
     strategy:
       matrix:
-        platform: ["Windows Desktop", "Linux", "Linux arm64", "Web"]
+        platform: ["Windows Desktop", "Linux", "Linux arm64", "Web", "Android arm32", "Android arm64", "Android x86 and x86 64", "macOS"]
       fail-fast: false
+      max-parallel: 1
 
     steps:
       - uses: actions/checkout@v4
