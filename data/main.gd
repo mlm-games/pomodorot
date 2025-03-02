@@ -92,7 +92,7 @@ func _on_skip_button_pressed() -> void:
 func _on_settings_button_pressed() -> void:
 	var settings_dialog := preload("res://data/settings_dialog.tscn").instantiate()
 	add_child(settings_dialog)
-	settings_dialog.popup_centered()
+	settings_dialog.popup_centered() #FIXME: Check if there is a way to popup window from center with anim like windowkill?
 
 func _notification(what:) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

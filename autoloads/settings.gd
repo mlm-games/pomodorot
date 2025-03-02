@@ -8,6 +8,7 @@ var desktop_notifications: bool = true
 var minimize_to_tray: bool = true
 var minimize_to_tray_on_close: bool = true
 var cover_screen_during_breaks: bool = true
+var uncover_when_skipped: bool = false #TODO: Implement when needed
 
 # Sound settings
 var sound_enabled: bool = true
@@ -84,10 +85,10 @@ func load_timer_settings() -> Dictionary[StringName, float]:
 	var config := ConfigFile.new()
 	var error := config.load(TIMER_SETTINGS_PATH)
 	
-	var default_work_duration := 25 * 60
-	var default_short_break_duration := 5 * 60
-	var default_long_break_duration := 15 * 60
-	var default_long_break_interval := 4
+	const default_work_duration : int = 25 * 60
+	const default_short_break_duration : int = 5 * 60
+	const default_long_break_duration : int = 15 * 60
+	const default_long_break_interval : int = 4
 	
 	if error != OK:
 		# First run or file doesn't exist

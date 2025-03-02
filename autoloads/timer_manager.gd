@@ -87,21 +87,26 @@ func _on_timer_timeout()  -> void:
 	is_running = false
 	timer_finished.emit(current_timer_type)
 	
-	# Handle auto-start of next timer based on settings
 	if Settings.auto_start_work_timer and current_timer_type != TimerType.WORK:
 		_advance_timer_type()
 		start_timer()
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, Settings.always_on_top)
 		if prev_window_mode: DisplayServer.window_set_mode(prev_window_mode)
+	
 	elif Settings.auto_start_break_timer and current_timer_type == TimerType.WORK:
 		_advance_timer_type()
 		start_timer()
+		DisplayServer.window_move_to_foreground()
 		if Settings.cover_screen_during_breaks:
 			prev_window_mode = DisplayServer.window_get_mode(get_tree().get_root().get_window_id())
-			#TODO: add the window changing part even for skips
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+			print(prev_window_mode)
+			#TODO: add the window changing part even for skips (or do not add as this is better when u skip impulsively?)
+			if prev_window_mode == DisplayServer.WINDOW_MODE_MINIMIZED:
+				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+			if !get_window().has_focus(): get_window().grab_focus()
 			DisplayServer.window_set_mode.call_deferred(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			DisplayServer.window_set_flag.call_deferred(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
+			 #TODO: call a redraw or screen update here, none the following worked: a#RenderingServer.force_draw()    # OS.notification(NOTIFICATION_WM_SIZE_CHANGED)  #get_tree().get_world()
 
 
 func _advance_timer_type() -> void:
