@@ -1,3 +1,7 @@
+## v0.7.6
+
+ - Fix the naming of the release files of arm64 and x86 and x86_64 apks
+
 ## v0.7.5
 
  - Delete the build files that were causing the problems all along
