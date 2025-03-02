@@ -141,3 +141,26 @@ jobs:
           body_path: ./fastlane/metadata/android/en-US/changelogs/${{ needs.commit-vercode-changes.outputs.new_version_code }}.txt
           prerelease: ${{ inputs.mark_prerelease }}
           generate_release_notes: true
+        continue-on-error: true
+
+      - name: Generate SHA256 checksums
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}/builds/
+          
+          # Create checksums file
+          echo "# SHA256 Checksums for ${{ matrix.platform }}" > SHA256SUMS.txt
+          echo "Generated on $(date)" >> SHA256SUMS.txt
+          echo "" >> SHA256SUMS.txt
+          
+          # Calculate checksums for each file and append to checksums file
+          for file in *; do
+            if [ -f "$file" ] && [ "$file" != "SHA256SUMS.txt" ]; then
+              HASH=$(sha256sum "$file" | cut -d ' ' -f 1)
+              echo "$HASH  $file" >> SHA256SUMS.txt
+              echo "File: $file"
+              echo "SHA256: $HASH"
+            fi
+          done
+        continue-on-error: true
+
