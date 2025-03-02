@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 CommandLine="*res://autoloads/command_line.gd"
 Settings="*res://autoloads/settings.gd"
 TimerManager="*res://autoloads/timer_manager.gd"
+SoundManager="*res://data/sound_manager.gd"
 
 [debug]
 

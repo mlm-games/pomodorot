@@ -1,16 +1,16 @@
 extends Control
 
-@onready var time_label = $VBoxContainer/TimeLabel
-@onready var status_label = $VBoxContainer/StatusLabel
-@onready var progress_bar = $VBoxContainer/ProgressBar
-@onready var start_pause_button = $VBoxContainer/HBoxContainer/StartPauseButton
-@onready var stop_button = $VBoxContainer/HBoxContainer/StopButton
-@onready var skip_button = $VBoxContainer/HBoxContainer/SkipButton
+@onready var time_label : Label = $VBoxContainer/TimeLabel
+@onready var status_label : Label = $VBoxContainer/StatusLabel
+@onready var progress_bar : ProgressBar = $VBoxContainer/ProgressBar
+@onready var start_pause_button : Button = $VBoxContainer/HBoxContainer/StartPauseButton
+@onready var stop_button : Button = $VBoxContainer/HBoxContainer/StopButton
+@onready var skip_button : Button = $VBoxContainer/HBoxContainer/SkipButton
 
 var notification_manager: Node
 var sound_manager: Node
 
-func _ready():
+func _ready() -> void:
 	# Initialize managers
 	notification_manager = preload("res://data/notification_manager.gd").new()
 	add_child(notification_manager)
@@ -30,10 +30,10 @@ func _ready():
 	_update_ui(0, 0)
 	_set_timer_inactive_state()
 
-func _on_timer_updated(time_left, total_time):
+func _on_timer_updated(time_left: int, total_time: int) -> void:
 	_update_ui(time_left, total_time)
 
-func _on_timer_started(timer_type):
+func _on_timer_started(timer_type: TimerManager.TimerType) -> void:
 	match timer_type:
 		TimerManager.TimerType.WORK:
 			status_label.text = "Working"
@@ -46,22 +46,22 @@ func _on_timer_started(timer_type):
 	stop_button.disabled = false
 	skip_button.disabled = false
 
-func _on_timer_finished(_timer_type):
+func _on_timer_finished(_timer_type: TimerManager.TimerType) -> void:
 	_set_timer_inactive_state()
 
-func _on_timer_paused():
+func _on_timer_paused() -> void:
 	start_pause_button.text = "Resume"
 
-func _on_timer_resumed():
+func _on_timer_resumed() -> void:
 	start_pause_button.text = "Pause"
 
-func _on_timer_stopped():
+func _on_timer_stopped() -> void:
 	_set_timer_inactive_state()
 
-func _update_ui(time_left, total_time):
+func _update_ui(time_left: int, total_time: int) -> void:
 	# Update time display
-	var minutes = int(time_left) / 60
-	var seconds = int(time_left) % 60
+	var minutes := int(time_left / 60)
+	var seconds := int(time_left % 60)
 	time_label.text = "%02d:%02d" % [minutes, seconds]
 	
 	# Update progress bar
@@ -70,12 +70,12 @@ func _update_ui(time_left, total_time):
 	else:
 		progress_bar.value = 0
 
-func _set_timer_inactive_state():
+func _set_timer_inactive_state() -> void:
 	start_pause_button.text = "Start"
 	stop_button.disabled = true
 	skip_button.disabled = true
 
-func _on_start_pause_button_pressed():
+func _on_start_pause_button_pressed() -> void:
 	if not TimerManager.is_running:
 		TimerManager.start_timer()
 	elif TimerManager.is_paused:
@@ -83,18 +83,18 @@ func _on_start_pause_button_pressed():
 	else:
 		TimerManager.pause_timer()
 
-func _on_stop_button_pressed():
+func _on_stop_button_pressed() -> void:
 	TimerManager.stop_timer()
 
-func _on_skip_button_pressed():
+func _on_skip_button_pressed() -> void:
 	TimerManager.skip_timer()
 
-func _on_settings_button_pressed():
-	var settings_dialog = preload("res://data/settings_dialog.tscn").instantiate()
+func _on_settings_button_pressed() -> void:
+	var settings_dialog := preload("res://data/settings_dialog.tscn").instantiate()
 	add_child(settings_dialog)
 	settings_dialog.popup_centered()
 
-func _notification(what):
+func _notification(what:) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		if Settings.minimize_to_tray_on_close:
 			pass

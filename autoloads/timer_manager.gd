@@ -1,8 +1,8 @@
 extends Node
 
-signal timer_updated(time_left, total_time)
-signal timer_finished(timer_type)
-signal timer_started(timer_type)
+signal timer_updated(time_left: int, total_time: int)
+signal timer_finished(timer_type: TimerType)
+signal timer_started(timer_type: TimerType)
 signal timer_paused
 signal timer_resumed
 signal timer_stopped
@@ -17,11 +17,12 @@ var is_running: bool = false
 var is_paused: bool = false
 var cycle_count: int = 0
 var silent_mode: bool = false
+var prev_window_mode: DisplayServer.WindowMode
 
 # Default timer durations (in seconds)
-var work_duration: float = 25 * 60
-var short_break_duration: float = 5 * 60
-var long_break_duration: float = 15 * 60
+var work_duration: int = 25 * 60
+var short_break_duration: int = 5 * 60
+var long_break_duration: int = 15 * 60
 var long_break_interval: int = 4  # After how many work sessions
 
 func _ready() -> void:
@@ -90,9 +91,18 @@ func _on_timer_timeout()  -> void:
 	if Settings.auto_start_work_timer and current_timer_type != TimerType.WORK:
 		_advance_timer_type()
 		start_timer()
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, Settings.always_on_top)
+		if prev_window_mode: DisplayServer.window_set_mode(prev_window_mode)
 	elif Settings.auto_start_break_timer and current_timer_type == TimerType.WORK:
 		_advance_timer_type()
 		start_timer()
+		if Settings.cover_screen_during_breaks:
+			prev_window_mode = DisplayServer.window_get_mode(get_tree().get_root().get_window_id())
+			#TODO: add the window changing part even for skips
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+			DisplayServer.window_set_mode.call_deferred(DisplayServer.WINDOW_MODE_FULLSCREEN)
+			DisplayServer.window_set_flag.call_deferred(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
+
 
 func _advance_timer_type() -> void:
 	match current_timer_type:
@@ -133,5 +143,5 @@ func _on_silent_mode_requested(value: bool) -> void:
 	silent_mode = value
 
 func _on_start_timer_requested() -> void:
-	print("idk why this doesnt work")
+	#print("idk why this doesnt work")
 	start_timer(TimerType.WORK)

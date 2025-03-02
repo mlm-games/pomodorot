@@ -7,6 +7,7 @@ var auto_start_break_timer: bool = true
 var desktop_notifications: bool = true
 var minimize_to_tray: bool = true
 var minimize_to_tray_on_close: bool = true
+var cover_screen_during_breaks: bool = true
 
 # Sound settings
 var sound_enabled: bool = true
@@ -19,12 +20,12 @@ var tick_sound_path: String = "res://assets/sfx/tick-tock.ogg"
 const SETTINGS_PATH = "user://settings.cfg"
 const TIMER_SETTINGS_PATH = "user://timer_settings.cfg"
 
-func _ready():
+func _ready() -> void:
 	load_settings()
 	_apply_settings()
 
-func save_settings():
-	var config = ConfigFile.new()
+func save_settings() -> void:
+	var config := ConfigFile.new()
 	
 	# General settings
 	config.set_value("general", "always_on_top", always_on_top)
@@ -33,6 +34,7 @@ func save_settings():
 	config.set_value("general", "desktop_notifications", desktop_notifications)
 	config.set_value("general", "minimize_to_tray", minimize_to_tray)
 	config.set_value("general", "minimize_to_tray_on_close", minimize_to_tray_on_close)
+	config.set_value("general", "cover_screen_during_breaks", cover_screen_during_breaks)
 	
 	# Sound settings
 	config.set_value("sound", "sound_enabled", sound_enabled)
@@ -43,9 +45,9 @@ func save_settings():
 	
 	config.save(SETTINGS_PATH)
 
-func load_settings():
-	var config = ConfigFile.new()
-	var error = config.load(SETTINGS_PATH)
+func load_settings() -> void:
+	var config := ConfigFile.new()
+	var error := config.load(SETTINGS_PATH)
 	
 	if error != OK:
 		# First run or file doesn't exist
@@ -59,6 +61,7 @@ func load_settings():
 	desktop_notifications = config.get_value("general", "desktop_notifications", desktop_notifications)
 	minimize_to_tray = config.get_value("general", "minimize_to_tray", minimize_to_tray)
 	minimize_to_tray_on_close = config.get_value("general", "minimize_to_tray_on_close", minimize_to_tray_on_close)
+	cover_screen_during_breaks = config.get_value("general", "cover_screen_during_breaks", cover_screen_during_breaks)
 	
 	# Sound settings
 	sound_enabled = config.get_value("sound", "sound_enabled", sound_enabled)
@@ -67,8 +70,8 @@ func load_settings():
 	tick_sound_enabled = config.get_value("sound", "tick_sound_enabled", tick_sound_enabled)
 	tick_sound_path = config.get_value("sound", "tick_sound_path", tick_sound_path)
 
-func save_timer_settings(work_dur: float, short_break_dur: float, long_break_dur: float, long_break_int: int):
-	var config = ConfigFile.new()
+func save_timer_settings(work_dur: float, short_break_dur: float, long_break_dur: float, long_break_int: int) -> void:
+	var config := ConfigFile.new()
 	
 	config.set_value("timer", "work_duration", work_dur)
 	config.set_value("timer", "short_break_duration", short_break_dur)
@@ -78,13 +81,13 @@ func save_timer_settings(work_dur: float, short_break_dur: float, long_break_dur
 	config.save(TIMER_SETTINGS_PATH)
 
 func load_timer_settings() -> Dictionary[StringName, float]:
-	var config = ConfigFile.new()
-	var error = config.load(TIMER_SETTINGS_PATH)
+	var config := ConfigFile.new()
+	var error := config.load(TIMER_SETTINGS_PATH)
 	
-	var default_work_duration = 25 * 60
-	var default_short_break_duration = 5 * 60
-	var default_long_break_duration = 15 * 60
-	var default_long_break_interval = 4
+	var default_work_duration := 25 * 60
+	var default_short_break_duration := 5 * 60
+	var default_long_break_duration := 15 * 60
+	var default_long_break_interval := 4
 	
 	if error != OK:
 		# First run or file doesn't exist
@@ -104,6 +107,6 @@ func load_timer_settings() -> Dictionary[StringName, float]:
 		"long_break_interval": config.get_value("timer", "long_break_interval", default_long_break_interval)
 	}
 
-func _apply_settings():
+func _apply_settings() -> void:
 	if always_on_top:
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)

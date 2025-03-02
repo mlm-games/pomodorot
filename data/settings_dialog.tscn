@@ -86,6 +86,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Minimize to Tray on Close"
 
+[node name="CoverScreenDuringBreaksCheck" type="CheckButton" parent="Control/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Cover Screen During Breaks"
+
 [node name="HSeparator" type="HSeparator" parent="Control/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
