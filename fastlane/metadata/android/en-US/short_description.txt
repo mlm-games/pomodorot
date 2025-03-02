@@ -1,0 +1,1 @@
+A simple pomodoro timer with screen blocking

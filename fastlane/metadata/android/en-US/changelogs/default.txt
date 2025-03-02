@@ -1,0 +1,2 @@
+The changelog can be viewed here: 
+https://github.com/mlm-games/pomodorot/blob/main/CHANGELOG.md
