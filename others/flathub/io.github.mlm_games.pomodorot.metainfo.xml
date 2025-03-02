@@ -19,27 +19,35 @@
   <url type="homepage">https://github.com/mlm-games/pomodorot</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/flathub/io.github.mlm_games.pomodorot/master/screenshots/1.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/pomodorot/refs/tags/0.7.2/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png</image>
       <caption>Main Menu Screenshot</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/flathub/io.github.mlm_games.pomodorot/master/screenshots/2.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/pomodorot/refs/tags/0.7.2/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png</image>
       <caption>Settings screenshot 1</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/flathub/io.github.mlm_games.pomodorot/master/screenshots/3.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/pomodorot/refs/tags/0.7.2/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png</image>
       <caption>Settings screenshot 2</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/flathub/io.github.mlm_games.pomodorot/master/screenshots/4.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/pomodorot/refs/tags/0.7.2/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png</image>
       <caption>Another screenshot</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/flathub/io.github.mlm_games.pomodorot/master/screenshots/5.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/pomodorot/refs/tags/0.7.2/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png</image>
       <caption>Another screenshot</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/flathub/io.github.mlm_games.pomodorot/master/screenshots/6.png</image>
+      <image>https://raw.githubusercontent.com/mlm-games/pomodorot/refs/tags/0.7.2/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png</image>
+      <caption>Another screenshot</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/mlm-games/pomodorot/refs/tags/0.7.2/fastlane/metadata/android/en-US/images/phoneScreenshots/7.png</image>
+      <caption>Another screenshot</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/mlm-games/pomodorot/refs/tags/0.7.2/fastlane/metadata/android/en-US/images/phoneScreenshots/8.png</image>
       <caption>Another screenshot</caption>
     </screenshot>
   </screenshots>
