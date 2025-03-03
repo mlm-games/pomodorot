@@ -1,3 +1,8 @@
+## v0.7.7
+
+ - Show notification then grab focus (for fullscreen blocking not occuring in some devices without switching to app)
+ - Fix wrong metainfo.xml license name
+
 ## v0.7.6
 
  - Fix the naming of the release files of arm64 and x86 and x86_64 apks
