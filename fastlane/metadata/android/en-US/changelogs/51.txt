@@ -1,0 +1,5 @@
+v0.7.7
+
+ - Show notification then grab focus (for fullscreen blocking not occuring in some devices without switching to app)
+ - Fix wrong metainfo.xml license name
+
