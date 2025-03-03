@@ -1,5 +1,7 @@
 extends Control
 
+#HACK: can close the window while alt tabbing if it is always on top or fullscreen or alt+f4
+
 @onready var time_label : Label = $VBoxContainer/TimeLabel
 @onready var status_label : Label = $VBoxContainer/StatusLabel
 @onready var progress_bar : ProgressBar = $VBoxContainer/ProgressBar

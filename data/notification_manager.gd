@@ -15,13 +15,14 @@ func _on_timer_finished(timer_type: TimerManager.TimerType) -> void:
 		match timer_type:
 			TimerManager.TimerType.WORK:
 				 #FIXME: Run after sound plays and before next timer
-				show_notification.call_deferred(work_notification_title, work_notification_body)
+				show_notification_and_grab_focus.call_deferred(work_notification_title, work_notification_body)
 			TimerManager.TimerType.SHORT_BREAK:
-				show_notification.call_deferred(short_break_notification_title, short_break_notification_body)
+				show_notification_and_grab_focus.call_deferred(short_break_notification_title, short_break_notification_body)
 			TimerManager.TimerType.LONG_BREAK:
-				show_notification.call_deferred(long_break_notification_title, long_break_notification_body)
+				show_notification_and_grab_focus.call_deferred(long_break_notification_title, long_break_notification_body)
 
-func show_notification(title: String, content: String) -> void:
+func show_notification_and_grab_focus(title: String, content: String) -> void:
 	DisplayServer.window_request_attention() #FIXME: Use window's function or just show a smaller notification setting for ppl who dod not want a slow setting
 	if OS.get_name() != "Web":
 		OS.alert(content, title)
+	get_tree().get_root().grab_focus()
