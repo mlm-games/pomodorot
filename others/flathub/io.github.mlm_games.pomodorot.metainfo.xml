@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>io.github.mlm_games.pomodorot</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>AGPL</project_license>
+  <project_license>AGPL-3.0-or-later</project_license>
   <name>Pomodorot</name>
   <summary>A pomodoro timer which can block your screen during breaks</summary>
   <description>
@@ -57,7 +57,9 @@
     </release>
   </releases>
   <content_rating type="oars-1.1"></content_rating>
-  <developer_name>MLM Games</developer_name>
+  <developer id="io.github.mlm_games">
+    <name>MLM Games</name>
+  </developer>
   <branding>
     <color type="primary" scheme_preference="light">#faa298</color>
     <color type="primary" scheme_preference="dark">#7f2c22</color>

@@ -1,3 +1,7 @@
+## v0.7.8
+
+ - Change the license name final for fllathub metainfo.xml
+
 ## v0.7.7
 
  - Show notification then grab focus (for fullscreen blocking not occuring in some devices without switching to app)
