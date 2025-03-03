@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>io.github.mlm_games.pomodorot</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>MIT</project_license>
+  <project_license>AGPL</project_license>
   <name>Pomodorot</name>
   <summary>A pomodoro timer which can block your screen during breaks</summary>
   <description>
