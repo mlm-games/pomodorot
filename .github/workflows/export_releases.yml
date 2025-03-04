@@ -116,7 +116,6 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           BUTLER_UPLOAD: ${{ inputs.upload_to_itch }}
-          GODOT_PREVIEW_BUILDS: true
         continue-on-error: true
 
       - name: Set artifact name and pull latest
