@@ -1,4 +1,8 @@
-Pomodorot is a timer app which can be used to set 20 minute breaks where you move away from your computer or also can be used as a pomodoro timer. Its main difference being the ability to block the screen when its break time so that you don't ignore it impulsively.
+Pomodorot is a timer app which can be used to set 20 minute breaks where you move away from your computer or also can be used as a pomodoro timer. 
+
+Currently it's screen blocking capabilities is only available in desktops, but plan to add it as a setting for android
+
+If you want an app which pauses or doesn't count down when not open directly on the screen (not in background), then this could work for you. .
 
 Features :
 
@@ -7,3 +11,5 @@ Features :
 	. Easy on the eyes
 	. Open source
 	. Fully free with no ads
+
+More info on the itch website: https://ragebreaker.itch.io/pomodorot
