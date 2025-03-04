@@ -1,1 +1,1 @@
-A simple pomodoro timer with screen blocking
+A simple timer which pauses when not in view
