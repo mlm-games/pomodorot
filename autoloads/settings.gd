@@ -9,6 +9,7 @@ var minimize_to_tray: bool = true
 var minimize_to_tray_on_close: bool = true
 var cover_screen_during_breaks: bool = true
 var uncover_when_skipped: bool = false #TODO: Implement when needed
+var play_tick_sound_in_the_last_10_seconds: bool = false #TODO: If you would want to close the work or pause before the screen gets blocked only when needed
 
 # Sound settings
 var sound_enabled: bool = true

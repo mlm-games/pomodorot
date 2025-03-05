@@ -26,9 +26,10 @@ func _on_timer_finished(timer_type: TimerManager.TimerType) -> void:
 					audio_player.play()
 
 func _on_timer_updated(time_left: int, _total_time: int) -> void:
-	if Settings.sound_enabled and Settings.tick_sound_enabled and not TimerManager.silent_mode:
+	if Settings.sound_enabled and Settings.tick_sound_enabled and not TimerManager.silent_mode \
+	and TimerManager.current_timer_type == TimerManager.TimerType.WORK:
 		# Play tick sound at every full second
 		if fmod(time_left, 1.0) < 0.05 and time_left > 0:
 			if tick_sound:
-				audio_player.stream = tick_sound
-				audio_player.play()
+				if not audio_player.stream == tick_sound: audio_player.stream = tick_sound
+				if not audio_player.playing: audio_player.play()

@@ -1,3 +1,8 @@
+## v0.7.9
+
+ - Fix tick tock sound (still sounds a little bit odd)
+ - Give proper name for fdroid release
+
 ## v0.7.8
 
  - Change the license name final for fllathub metainfo.xml
