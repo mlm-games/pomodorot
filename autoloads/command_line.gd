@@ -9,6 +9,5 @@ func _ready() -> void:
 		match arg:
 			"--start-timer":
 				start_timer_requested.emit.call_deferred()
-				print("Hi idk why this doesnt work")
 			"--silent":
 				silent_mode_requested.emit.call_deferred(true)

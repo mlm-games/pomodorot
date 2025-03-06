@@ -10,6 +10,7 @@ var minimize_to_tray_on_close: bool = true
 var cover_screen_during_breaks: bool = true
 var uncover_when_skipped: bool = false #TODO: Implement when needed
 var play_tick_sound_in_the_last_10_seconds: bool = false #TODO: If you would want to close the work or pause before the screen gets blocked only when needed
+var content_size_scale: float = 1
 
 # Sound settings
 var sound_enabled: bool = true
@@ -22,9 +23,14 @@ var tick_sound_path: String = "res://assets/sfx/tick-tock.ogg"
 const SETTINGS_PATH = "user://settings.cfg"
 const TIMER_SETTINGS_PATH = "user://timer_settings.cfg"
 
+func _init() -> void:
+	if OS.get_name() == "Android" and !FileAccess.file_exists(SETTINGS_PATH):
+		content_size_scale = 2
+
 func _ready() -> void:
 	load_settings()
 	_apply_settings()
+	
 
 func save_settings() -> void:
 	var config := ConfigFile.new()
@@ -37,6 +43,10 @@ func save_settings() -> void:
 	config.set_value("general", "minimize_to_tray", minimize_to_tray)
 	config.set_value("general", "minimize_to_tray_on_close", minimize_to_tray_on_close)
 	config.set_value("general", "cover_screen_during_breaks", cover_screen_during_breaks)
+	config.set_value("general", "uncover_when_skipped", uncover_when_skipped)
+	config.set_value("general", "play_tick_sound_in_the_last_10_seconds", play_tick_sound_in_the_last_10_seconds)
+	config.set_value("general", "content_size_scale", content_size_scale)
+	
 	
 	# Sound settings
 	config.set_value("sound", "sound_enabled", sound_enabled)
@@ -53,6 +63,7 @@ func load_settings() -> void:
 	
 	if error != OK:
 		# First run or file doesn't exist
+		
 		save_settings()
 		return
 	
@@ -64,6 +75,9 @@ func load_settings() -> void:
 	minimize_to_tray = config.get_value("general", "minimize_to_tray", minimize_to_tray)
 	minimize_to_tray_on_close = config.get_value("general", "minimize_to_tray_on_close", minimize_to_tray_on_close)
 	cover_screen_during_breaks = config.get_value("general", "cover_screen_during_breaks", cover_screen_during_breaks)
+	uncover_when_skipped = config.get_value("general", "uncover_when_skipped", uncover_when_skipped)
+	play_tick_sound_in_the_last_10_seconds = config.get_value("general", "play_tick_sound_in_the_last_10_seconds", play_tick_sound_in_the_last_10_seconds)
+	content_size_scale  = config.get_value("general", "content_size_scale", content_size_scale)
 	
 	# Sound settings
 	sound_enabled = config.get_value("sound", "sound_enabled", sound_enabled)
@@ -110,5 +124,6 @@ func load_timer_settings() -> Dictionary[StringName, float]:
 	}
 
 func _apply_settings() -> void:
-	if always_on_top:
-		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
+	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, always_on_top)
+	get_tree().root.set_content_scale_factor(content_size_scale)
+ 

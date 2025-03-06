@@ -32,6 +32,7 @@ gdscript/warnings/untyped_declaration=1
 
 window/size/viewport_width=600
 window/size/viewport_height=800
+window/handheld/orientation=5
 
 [rendering]
 

@@ -78,11 +78,13 @@ text = "Desktop Notifications"
 
 [node name="MinimizeToTrayCheck" type="CheckButton" parent="Control/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "Minimize to Tray"
 
 [node name="MinimizeOnCloseCheck" type="CheckButton" parent="Control/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "Minimize to Tray on Close"
 
@@ -90,6 +92,29 @@ text = "Minimize to Tray on Close"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Cover Screen During Breaks"
+
+[node name="UncoverWhenSkippedCheck" type="CheckButton" parent="Control/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Allow Uncovering When Skipped"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings/HBoxContainer"]
+layout_mode = 2
+text = "Screen Content Scale: "
+
+[node name="ContentScaleSpin" type="SpinBox" parent="Control/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.05
+value = 1.0
+allow_greater = true
+allow_lesser = true
 
 [node name="HSeparator" type="HSeparator" parent="Control/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -111,6 +136,12 @@ text = "Sound Enabled"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Tick Sound"
+
+[node name="TickLast10SecsCheck" type="CheckButton" parent="Control/ScrollContainer/MarginContainer/VBoxContainer/SoundSettings"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Play Tick Sound For Last 10 Seconds"
 
 [node name="HSeparator2" type="HSeparator" parent="Control/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -1,3 +1,10 @@
+## v0.8.0
+
+ - Add content screen size scaling option
+ - Automatically scales screen size for android properly
+ - Android: Use potrait (sensor) mode
+ - Desktop: Add other placeholder options and hide minimize to tray option (don't yet know how to do that for godot)
+
 ## v0.7.9
 
  - Fix tick tock sound (still sounds a little bit odd)
@@ -5,7 +12,7 @@
 
 ## v0.7.8
 
- - Change the license name final for fllathub metainfo.xml
+ - Change the license name final for flathub metainfo.xml
 
 ## v0.7.7
 

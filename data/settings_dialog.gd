@@ -13,6 +13,9 @@ extends Window
 @onready var long_break_spin: SpinBox = %LongBreakSpin
 @onready var long_break_interval_spin: SpinBox = %LongBreakIntervalSpin
 @onready var cover_screen_during_breaks_check: CheckButton = %CoverScreenDuringBreaksCheck
+@onready var uncover_when_skipped_check: CheckButton = %UncoverWhenSkippedCheck
+@onready var content_scale_spin: SpinBox = %ContentScaleSpin
+@onready var tick_last_10_secs_check: CheckButton = %TickLast10SecsCheck
 
 
 func _ready() -> void:
@@ -26,6 +29,9 @@ func _ready() -> void:
 	sound_enabled_check.button_pressed = Settings.sound_enabled
 	tick_sound_check.button_pressed = Settings.tick_sound_enabled
 	cover_screen_during_breaks_check.button_pressed = Settings.cover_screen_during_breaks
+	uncover_when_skipped_check.button_pressed = Settings.uncover_when_skipped
+	tick_last_10_secs_check.button_pressed = Settings.play_tick_sound_in_the_last_10_seconds
+	content_scale_spin.value = Settings.content_size_scale
 	
 	# Load timer settings
 	var timer_settings := Settings.load_timer_settings()
@@ -45,6 +51,9 @@ func _on_save_button_pressed() -> void:
 	Settings.sound_enabled = sound_enabled_check.button_pressed
 	Settings.tick_sound_enabled = tick_sound_check.button_pressed
 	Settings.cover_screen_during_breaks = cover_screen_during_breaks_check.button_pressed
+	Settings.content_size_scale = content_scale_spin.value
+	Settings.play_tick_sound_in_the_last_10_seconds = tick_last_10_secs_check.button_pressed
+	Settings.uncover_when_skipped = uncover_when_skipped_check.button_pressed
 	Settings.save_settings()
 	
 	# Save timer settings
@@ -54,7 +63,8 @@ func _on_save_button_pressed() -> void:
 	TimerManager.set_long_break_interval(long_break_interval_spin.value)
 	
 	# Apply settings that need immediate effect
-	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, Settings.always_on_top)
+	Settings._apply_settings()
+	
 	
 	queue_free()
 
