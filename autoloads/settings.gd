@@ -24,7 +24,7 @@ const SETTINGS_PATH = "user://settings.cfg"
 const TIMER_SETTINGS_PATH = "user://timer_settings.cfg"
 
 func _init() -> void:
-	if OS.get_name() == "Android" and !FileAccess.file_exists(SETTINGS_PATH):
+	if (OS.get_name() == "Android" or OS.get_name() == "Web") and !FileAccess.file_exists(SETTINGS_PATH):
 		content_size_scale = 2
 
 func _ready() -> void:
