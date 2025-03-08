@@ -1,6 +1,7 @@
 ## v0.8.1
 
  - the --silent cmd option now minimizes the window instead of disabling notifications and sound 
+ - The old silent behaivor can be called by --no-popups-and-sound 
 
 ## v0.8.0
 
