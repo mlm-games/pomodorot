@@ -52,6 +52,9 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="0.8.1" date="2025-03-08">
+      <url type="details">https://github.com/mlm-games/pomodorot/releases</url>
+    </release>
     <release version="0.7.2" date="2025-03-02">
       <url type="details">https://github.com/mlm-games/pomodorot/releases</url>
     </release>
