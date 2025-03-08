@@ -16,7 +16,7 @@ var total_time: float = 0
 var is_running: bool = false
 var is_paused: bool = false
 var cycle_count: int = 0
-var silent_mode: bool = false
+var no_popups_and_sound: bool = false
 var prev_window_mode: DisplayServer.WindowMode
 
 # Default timer durations (in seconds)
@@ -26,7 +26,7 @@ var long_break_duration: int = 15 * 60
 var long_break_interval: int = 4  # After how many work sessions
 
 func _ready() -> void:
-	CommandLine.silent_mode_requested.connect(_on_silent_mode_requested)
+	CommandLine.no_popups_and_sound_requested.connect(_on_no_popups_and_sound_requested)
 	CommandLine.start_timer_requested.connect(_on_start_timer_requested)
 	
 	timer = Timer.new()
@@ -144,8 +144,8 @@ func _load_durations() -> void:
 	long_break_duration = settings.long_break_duration
 	long_break_interval = settings.long_break_interval
 
-func _on_silent_mode_requested(value: bool) -> void:
-	silent_mode = value
+func _on_no_popups_and_sound_requested(value: bool) -> void:
+	no_popups_and_sound = value
 
 func _on_start_timer_requested() -> void:
 	#print("idk why this doesnt work")

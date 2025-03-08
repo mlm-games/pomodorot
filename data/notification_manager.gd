@@ -11,7 +11,7 @@ func _ready() -> void:
 	TimerManager.timer_finished.connect(_on_timer_finished)
 
 func _on_timer_finished(timer_type: TimerManager.TimerType) -> void:
-	if Settings.desktop_notifications and not TimerManager.silent_mode:
+	if Settings.desktop_notifications and not TimerManager.no_popups_and_sound:
 		match timer_type:
 			TimerManager.TimerType.WORK:
 				 #FIXME: Run after sound plays and before next timer

@@ -20,7 +20,8 @@ Mainly made for getting up every 20 mins (to follow the 20 min rule of looking a
 The application supports the following command line options:
 
 - `--start-timer`: Automatically starts the work timer when the application launches
-- `--silent`: Runs in silent mode (no sounds or notifications)
+- `--no-popups-and-sound`: Runs in silent mode (no sounds or notifications)
+- `--silent`: Minimizes the window on launch
 
 ## Settings
 
@@ -53,4 +54,4 @@ GPL-3.0 [License](LICENSE.md)
 
 ## Credits
 
-Heavily based on pomodorolm (but wanted another one due to command line options...)
+Heavily based on pomodorolm (but wanted another one for a command line option for the timer to automatically start when the system boots up...)

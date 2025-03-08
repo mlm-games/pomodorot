@@ -31,6 +31,7 @@ func _ready() -> void:
 	# Setup initial UI state
 	_update_ui(0, 0)
 	_set_timer_inactive_state()
+	
 
 func _on_timer_updated(time_left: int, total_time: int) -> void:
 	_update_ui(time_left, total_time)
