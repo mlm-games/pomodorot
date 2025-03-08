@@ -1,3 +1,7 @@
+## v0.8.1
+
+ - the --silent cmd option now minimizes the window instead of disabling notifications and sound 
+
 ## v0.8.0
 
  - Add content screen size scaling option
