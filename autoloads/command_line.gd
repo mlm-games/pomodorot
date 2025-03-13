@@ -14,4 +14,4 @@ func _ready() -> void:
 			"--no-popups-and-sound":
 				no_popups_and_sound_requested.emit.call_deferred(true)
 	#Test stuff
-	no_popups_and_sound_requested.emit.call_deferred(true)
+	#no_popups_and_sound_requested.emit.call_deferred(true)

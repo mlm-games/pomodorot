@@ -91,6 +91,7 @@ func _on_timer_timeout()  -> void:
 		_advance_timer_type()
 		start_timer()
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, Settings.always_on_top)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		if prev_window_mode: DisplayServer.window_set_mode(prev_window_mode)
 	
 	elif Settings.auto_start_break_timer and current_timer_type == TimerType.WORK:
