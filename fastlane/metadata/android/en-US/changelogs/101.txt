@@ -1,0 +1,4 @@
+v0.9.0
+
+ - Add theming support in settings
+
