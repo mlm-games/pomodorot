@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://xwgfdfp0i4u0"]
+[gd_scene load_steps=4 format=3 uid="uid://xwgfdfp0i4u0"]
 
 [ext_resource type="Script" uid="uid://bu2mbyrsocpnu" path="res://data/main.gd" id="1_f0jm3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfwe6"]
+bg_color = Color(0.121569, 0.14902, 0.266667, 1)
+
+[sub_resource type="Theme" id="Theme_s0khs"]
+Panel/styles/panel = SubResource("StyleBoxFlat_bfwe6")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -11,67 +17,84 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f0jm3")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_s0khs")
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="TimeLabel" type="Label" parent="VBoxContainer"]
+[node name="TimeLabel" type="Label" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "25:00"
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Ready"
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 value = 100.0
 show_percentage = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="StartPauseButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="StartPauseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 text = "Start"
 
-[node name="StopButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="StopButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 disabled = true
 text = "Stop"
 
-[node name="SkipButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="SkipButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 disabled = true
 text = "Skip"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="BottomButtonContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="BottomButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="SettingsButton" type="Button" parent="VBoxContainer/BottomButtonContainer"]
+[node name="SettingsButton" type="Button" parent="Panel/VBoxContainer/BottomButtonContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 text = "⚙"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/StartPauseButton" to="." method="_on_start_pause_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/StopButton" to="." method="_on_stop_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/BottomButtonContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/StartPauseButton" to="." method="_on_start_pause_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/StopButton" to="." method="_on_stop_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BottomButtonContainer/SettingsButton" to="." method="_on_settings_button_pressed"]

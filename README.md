@@ -5,8 +5,8 @@ A simple, customizable Pomodoro timer application built with Godot.
 Mainly made for getting up every 20 mins (to follow the 20 min rule of looking away for 20 secs and even maintaining proper blood circ.)
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/app.pomodorot/)
+	 alt="Get it on F-Droid"
+	 height="80">](https://f-droid.org/packages/app.pomodorot/)
 
 Or download the latest APK from the [Releases Section](https://github.com/mlm-games/pomodorot/releases/latest).
 
@@ -29,7 +29,7 @@ The application supports the following command line options:
 - `--no-popups-and-sound`: Runs in silent mode (no sounds or notifications)
 - `--silent`: Minimizes the window on launch
 
-## Settings
+## Initial Settings
 
 ### General Settings
 - **Always On Top**: Keeps the application window above other windows

@@ -11,6 +11,7 @@ var cover_screen_during_breaks: bool = true
 var uncover_when_skipped: bool = false #TODO: Implement when needed
 var play_tick_sound_in_the_last_10_seconds: bool = false #TODO: If you would want to close the work or pause before the screen gets blocked only when needed
 var content_size_scale: float = 1
+var theme_uid: StringName = ""
 
 # Sound settings
 var sound_enabled: bool = true
@@ -46,7 +47,7 @@ func save_settings() -> void:
 	config.set_value("general", "uncover_when_skipped", uncover_when_skipped)
 	config.set_value("general", "play_tick_sound_in_the_last_10_seconds", play_tick_sound_in_the_last_10_seconds)
 	config.set_value("general", "content_size_scale", content_size_scale)
-	
+	config.set_value("general", "theme", theme_uid)
 	
 	# Sound settings
 	config.set_value("sound", "sound_enabled", sound_enabled)
@@ -78,6 +79,7 @@ func load_settings() -> void:
 	uncover_when_skipped = config.get_value("general", "uncover_when_skipped", uncover_when_skipped)
 	play_tick_sound_in_the_last_10_seconds = config.get_value("general", "play_tick_sound_in_the_last_10_seconds", play_tick_sound_in_the_last_10_seconds)
 	content_size_scale  = config.get_value("general", "content_size_scale", content_size_scale)
+	theme_uid = config.get_value("general", "theme", theme_uid)
 	
 	# Sound settings
 	sound_enabled = config.get_value("sound", "sound_enabled", sound_enabled)
@@ -126,4 +128,32 @@ func load_timer_settings() -> Dictionary[StringName, float]:
 func _apply_settings() -> void:
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, always_on_top)
 	get_tree().root.set_content_scale_factor(content_size_scale)
+	change_theme(theme_uid)
  
+func change_theme(new_theme_uid: StringName) -> void:
+	var ui_root := get_tree().root
+	
+	if new_theme_uid != "": 
+		var new_theme := load(new_theme_uid)
+		apply_theme_to_controls(ui_root, new_theme)
+	else:
+		clear_theme_and_make_panels_transparent()
+
+func apply_theme_to_controls(node: Node, new_theme: Theme) -> void:
+	if node is Control:
+		node.theme = new_theme
+		if node is Panel:
+			node.self_modulate = Color.WHITE
+	
+	for child in node.get_children():
+		apply_theme_to_controls(child, new_theme)
+
+func clear_theme_and_make_panels_transparent() -> void:
+	get_tree().root.theme = null
+	
+	for child in get_tree().root.get_children():
+		if child is Control:
+			child.theme = null
+			if child is Panel:
+				child.self_modulate = Color.TRANSPARENT
+		

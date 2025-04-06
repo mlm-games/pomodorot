@@ -1,3 +1,7 @@
+## v0.9.0
+
+ - Add theming support in settings
+
 ## v0.8.1
 
  - the --silent cmd option now minimizes the window instead of disabling notifications and sound 

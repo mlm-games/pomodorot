@@ -100,13 +100,13 @@ func _on_timer_timeout()  -> void:
 		DisplayServer.window_move_to_foreground()
 		if Settings.cover_screen_during_breaks:
 			prev_window_mode = DisplayServer.window_get_mode(get_tree().get_root().get_window_id())
-			print(prev_window_mode)
 			#TODO: add the window changing part even for skips (or do not add as this is better when u skip impulsively?)
 			if prev_window_mode == DisplayServer.WINDOW_MODE_MINIMIZED:
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
-			#if !get_window().has_focus(): get_window().grab_focus()
+			
 			DisplayServer.window_set_mode.call_deferred(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			DisplayServer.window_set_flag.call_deferred(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
+			if !get_window().has_focus(): get_window().grab_focus.call_deferred()
 			 #TODO: call a redraw or screen update here, none the following worked: a#RenderingServer.force_draw()    # OS.notification(NOTIFICATION_WM_SIZE_CHANGED)  #get_tree().get_world()
 
 

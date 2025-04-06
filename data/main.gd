@@ -2,12 +2,12 @@ extends Control
 
 #HACK: can close the window while alt tabbing if it is always on top or fullscreen or alt+f4
 
-@onready var time_label : Label = $VBoxContainer/TimeLabel
-@onready var status_label : Label = $VBoxContainer/StatusLabel
-@onready var progress_bar : ProgressBar = $VBoxContainer/ProgressBar
-@onready var start_pause_button : Button = $VBoxContainer/HBoxContainer/StartPauseButton
-@onready var stop_button : Button = $VBoxContainer/HBoxContainer/StopButton
-@onready var skip_button : Button = $VBoxContainer/HBoxContainer/SkipButton
+@onready var time_label : Label = %TimeLabel
+@onready var status_label : Label = %StatusLabel
+@onready var progress_bar : ProgressBar = %ProgressBar
+@onready var start_pause_button : Button = %StartPauseButton
+@onready var stop_button : Button = %StopButton
+@onready var skip_button : Button = %SkipButton
 
 var notification_manager: Node
 var sound_manager: Node
