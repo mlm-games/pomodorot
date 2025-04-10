@@ -1,20 +1,33 @@
 $ErrorActionPreference = 'Stop'
 
 $packageName = 'pomodorot'
-$url = 'https://github.com/mlm-games/pomodorot/releases/download/$version/pomodorot.exe'
-$checksum = '$checksum'
-$checksumType = 'sha256'
-
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$fileLocation = Join-Path $toolsDir 'pomodorot.exe'
+$url = 'https://github.com/mlm-games/pomodorot/releases/download/0.0.0/pomodorot.exe'
 
-Get-ChocolateyWebFile -PackageName $packageName `
-                      -FileFullPath $fileLocation `
-                      -Url $url `
-                      -Checksum $checksum `
-                      -ChecksumType $checksumType
+$packageArgs = @{
+  packageName   = $packageName
+  fileType      = 'EXE'
+  url           = $url
+  softwareName  = 'Pomodorot*'
+  checksum      = '0000000000000000000000000000000000000000000000000000000000000000'
+  checksumType  = 'sha256'
+  silentArgs    = "/S"
+  validExitCodes= @(0)
+}
 
-$guiFile = Join-Path $toolsDir 'pomodorot.exe.gui'
-Set-Content -Path $guiFile -Value $null
+# If destination doesn't exist, create it
+$installDir = Join-Path $env:ProgramFiles $packageName
+if (!(Test-Path $installDir)) {
+  New-Item -ItemType Directory -Path $installDir | Out-Null
+}
 
-Install-BinFile -Name 'pomodorot' -Path $fileLocation
+# Download the file
+$fileLocation = Join-Path $installDir "$packageName.exe"
+Get-ChocolateyWebFile @packageArgs -FileFullPath $fileLocation
+
+# Create shortcut in Start Menu
+$startMenu = Join-Path $env:ProgramData "Microsoft\Windows\Start Menu\Programs"
+$shortcutFile = Join-Path $startMenu "$packageName.lnk"
+Install-ChocolateyShortcut -ShortcutFilePath $shortcutFile -TargetPath $fileLocation
+
+Write-Host "Pomodorot has been installed to $installDir"

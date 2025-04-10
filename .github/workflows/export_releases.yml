@@ -16,6 +16,16 @@ on:
         required: true
         default: 'false'
         type: boolean
+      publish_to_choco:
+        description: 'Publish to Chocolatey'
+        required: false
+        default: 'false'
+        type: boolean
+      publish_to_winget:
+        description: 'Publish to WinGet'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   commit-vercode-changes:
@@ -164,4 +174,83 @@ jobs:
             fi
           done
         continue-on-error: true
+  
+  
+  publish-chocolatey:
+    needs: [prepare-and-build]
+    if: ${{ inputs.publish_to_choco == true }}
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download Windows build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Windows_Desktop-build
+          path: ./choco-package
+      
+      - name: Setup Chocolatey
+        uses: crazy-max/ghaction-chocolatey@v3
+        with:
+          args: -v
+      
+      - name: Update Chocolatey nuspec version
+        shell: pwsh
+        run: |
+          $nuspecPath = ".\chocolatey\pomodorot.nuspec"
+          $content = Get-Content $nuspecPath
+          $content = $content -replace "<version>.*</version>", "<version>${{ inputs.version_name }}</version>"
+          $content | Set-Content $nuspecPath
+      
+      - name: Update Chocolatey install script
+        shell: pwsh
+        run: |
+          # Get the SHA256 hash from the generated checksums file
+          $checksumFile = Get-Content ".\choco-package\SHA256SUMS.txt"
+          $exeFileName = "pomodorot.exe"
+          $hashLine = $checksumFile | Where-Object { $_ -match "$exeFileName$" }
+          if ($hashLine) {
+            $hash = ($hashLine -split '\s+')[0]
+            Write-Output "Found hash: $hash for $exeFileName"
+          } else {
+            Write-Error "Could not find hash for $exeFileName in SHA256SUMS.txt"
+            exit 1
+          }
+          
+          # Update the chocolateyinstall.ps1 file
+          $installPath = ".\chocolatey\tools\chocolateyinstall.ps1"
+          $content = Get-Content $installPath
+          $content = $content -replace "url\s*=\s*'.*'", "url = 'https://github.com/mlm-games/pomodorot/releases/download/${{ inputs.version_name }}/pomodorot.exe'"
+          $content = $content -replace "checksum\s*=\s*'.*'", "checksum = '$hash'"
+          $content | Set-Content $installPath
+          
+          Write-Output "Updated chocolateyinstall.ps1 with new URL and checksum"
+            
+            - name: Pack and push Chocolatey package
+              shell: pwsh
+              env:
+                CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
+              run: |
+                choco pack .\chocolatey\pomodorot.nuspec
+                choco push pomodorot.${{ inputs.version_name }}.nupkg --source https://push.chocolatey.org/ --api-key $env:CHOCO_API_KEY
+
+  publish-winget:
+    needs: [prepare-and-build]
+    if: ${{ inputs.publish_to_winget == true }}
+    runs-on: windows-latest
+    steps:
+      - name: Download Windows build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Windows_Desktop-build
+          path: ./winget-package
+      
+      - name: Submit to WinGet
+        uses: vedantmgoyal2009/winget-releaser@v2
+        with:
+          identifier: MLMGames.pomodorot
+          version: ${{ inputs.version_name }}
+          release-tag: ${{ inputs.version_name }}
+          token: ${{ secrets.GH_TOKEN }}
+
 
