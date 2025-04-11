@@ -8,8 +8,10 @@ signal timer_resumed
 signal timer_stopped
 
 enum TimerType {WORK, SHORT_BREAK, LONG_BREAK}
+enum TimerState {STOPPED, RUNNING, PAUSED, FINISHED}
 
 var current_timer_type: int = TimerType.WORK
+var current_state: int = TimerState.STOPPED
 var timer: Timer
 var time_left: float = 0
 var total_time: float = 0
@@ -19,11 +21,11 @@ var cycle_count: int = 0
 var no_popups_and_sound: bool = false
 var prev_window_mode: DisplayServer.WindowMode
 
-# Default timer durations (in seconds)
+# Timer durations (in secs)
 var work_duration: int = 25 * 60
 var short_break_duration: int = 5 * 60
 var long_break_duration: int = 15 * 60
-var long_break_interval: int = 4  # After how many work sessions
+var long_break_interval: int = 4
 
 func _ready() -> void:
 	CommandLine.no_popups_and_sound_requested.connect(_on_no_popups_and_sound_requested)
@@ -34,13 +36,25 @@ func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
 	add_child(timer)
 	
-	# Load saved durations from settings
 	_load_durations()
+	
+	Settings.setting_changed.connect(_on_setting_changed)
 
 func _process(_delta: float) -> void:
 	if is_running and not is_paused:
 		time_left = timer.time_left
 		timer_updated.emit(time_left, total_time)
+
+func _on_setting_changed(key: String, value) -> void:
+	match key:
+		"work_duration":
+			work_duration = int(value * 60)
+		"short_break_duration":
+			short_break_duration = int(value * 60)
+		"long_break_duration":
+			long_break_duration = int(value * 60)
+		"long_break_interval":
+			long_break_interval = int(value)
 
 func start_timer(type: int = -1) -> void:
 	if type != -1:
@@ -58,24 +72,28 @@ func start_timer(type: int = -1) -> void:
 	timer.start(total_time)
 	is_running = true
 	is_paused = false
+	current_state = TimerState.RUNNING
 	timer_started.emit(current_timer_type)
 
 func pause_timer() -> void:
 	if is_running and not is_paused:
 		timer.paused = true
 		is_paused = true
+		current_state = TimerState.PAUSED
 		timer_paused.emit()
 
 func resume_timer() -> void:
 	if is_running and is_paused:
 		timer.paused = false
 		is_paused = false
+		current_state = TimerState.RUNNING
 		timer_resumed.emit()
 
 func stop_timer() -> void:
 	timer.stop()
 	is_running = false
 	is_paused = false
+	current_state = TimerState.STOPPED
 	timer_stopped.emit()
 
 func skip_timer() -> void:
@@ -83,32 +101,35 @@ func skip_timer() -> void:
 	_advance_timer_type()
 	start_timer()
 
-func _on_timer_timeout()  -> void:
+func _on_timer_timeout() -> void:
 	is_running = false
+	current_state = TimerState.FINISHED
 	timer_finished.emit(current_timer_type)
 	
-	if Settings.auto_start_work_timer and current_timer_type != TimerType.WORK:
+	if Settings.get_setting("auto_start_work_timer") and current_timer_type != TimerType.WORK:
 		_advance_timer_type()
 		start_timer()
-		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, Settings.always_on_top)
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, Settings.get_setting("always_on_top"))
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		if prev_window_mode: DisplayServer.window_set_mode(prev_window_mode)
+		if prev_window_mode:
+			DisplayServer.window_set_mode(prev_window_mode)
 	
-	elif Settings.auto_start_break_timer and current_timer_type == TimerType.WORK:
+	elif Settings.get_setting("auto_start_break_timer") and current_timer_type == TimerType.WORK:
 		_advance_timer_type()
 		start_timer()
 		DisplayServer.window_move_to_foreground()
-		if Settings.cover_screen_during_breaks:
+		
+		if Settings.get_setting("cover_screen_during_breaks"):
 			prev_window_mode = DisplayServer.window_get_mode(get_tree().get_root().get_window_id())
-			#TODO: add the window changing part even for skips (or do not add as this is better when u skip impulsively?)
+			
 			if prev_window_mode == DisplayServer.WINDOW_MODE_MINIMIZED:
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 			
 			DisplayServer.window_set_mode.call_deferred(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			DisplayServer.window_set_flag.call_deferred(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
-			if !get_window().has_focus(): get_window().grab_focus.call_deferred()
-			 #TODO: call a redraw or screen update here, none the following worked: a#RenderingServer.force_draw()    # OS.notification(NOTIFICATION_WM_SIZE_CHANGED)  #get_tree().get_world()
-
+			
+			if !get_window().has_focus():
+				get_window().grab_focus.call_deferred()
 
 func _advance_timer_type() -> void:
 	match current_timer_type:
@@ -122,32 +143,14 @@ func _advance_timer_type() -> void:
 		TimerType.SHORT_BREAK, TimerType.LONG_BREAK:
 			current_timer_type = TimerType.WORK
 
-func set_work_duration(minutes: float) -> void:
-	work_duration = minutes * 60
-	Settings.save_timer_settings(work_duration, short_break_duration, long_break_duration, long_break_interval)
-
-func set_short_break_duration(minutes: float) -> void:
-	short_break_duration = minutes * 60
-	Settings.save_timer_settings(work_duration, short_break_duration, long_break_duration, long_break_interval)
-
-func set_long_break_duration(minutes: float) -> void:
-	long_break_duration = minutes * 60
-	Settings.save_timer_settings(work_duration, short_break_duration, long_break_duration, long_break_interval)
-
-func set_long_break_interval(cycles: int) -> void:
-	long_break_interval = cycles
-	Settings.save_timer_settings(work_duration, short_break_duration, long_break_duration, long_break_interval)
-
 func _load_durations() -> void:
-	var settings := Settings.load_timer_settings()
-	work_duration = settings.work_duration
-	short_break_duration = settings.short_break_duration
-	long_break_duration = settings.long_break_duration
-	long_break_interval = settings.long_break_interval
+	work_duration = int(Settings.get_setting("work_duration") * 60)
+	short_break_duration = int(Settings.get_setting("short_break_duration") * 60)
+	long_break_duration = int(Settings.get_setting("long_break_duration") * 60)
+	long_break_interval = int(Settings.get_setting("long_break_interval"))
 
 func _on_no_popups_and_sound_requested(value: bool) -> void:
 	no_popups_and_sound = value
 
 func _on_start_timer_requested() -> void:
-	#print("idk why this doesnt work")
 	start_timer(TimerType.WORK)

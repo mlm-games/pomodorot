@@ -64,25 +64,30 @@ text = "General Settings"
 horizontal_alignment = 1
 
 [node name="GeneralSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="AlwaysOnTopCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "Always On Top"
 
 [node name="AutoStartWorkCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "Auto-start Work Timer"
 
 [node name="AutoStartBreakCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "Auto-start Break Timer"
 
 [node name="DesktopNotificationsCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "Desktop Notifications"
 
@@ -100,6 +105,7 @@ text = "Minimize to Tray on Close"
 
 [node name="CoverScreenDuringBreaksCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "Cover Screen During Breaks"
 
@@ -111,9 +117,11 @@ text = "Allow Uncovering When Skipped"
 
 [node name="ThemeOptions" type="OptionButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings/HBoxContainer"]
@@ -139,6 +147,7 @@ text = "Sound Settings"
 horizontal_alignment = 1
 
 [node name="SoundSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="SoundEnabledCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/SoundSettings"]
@@ -165,16 +174,18 @@ layout_mode = 2
 text = "Timer Settings"
 horizontal_alignment = 1
 
-[node name="TimerSettings" type="GridContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="TimerSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-columns = 2
 
 [node name="Label" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
+visible = false
 layout_mode = 2
 text = "Work Duration (minutes):"
 
 [node name="WorkDurationSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 min_value = 1.0
 max_value = 120.0
@@ -182,11 +193,13 @@ value = 25.0
 rounded = true
 
 [node name="Label2" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
+visible = false
 layout_mode = 2
 text = "Short Break (minutes):"
 
 [node name="ShortBreakSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 min_value = 1.0
 max_value = 30.0
@@ -194,11 +207,13 @@ value = 5.0
 rounded = true
 
 [node name="Label3" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
+visible = false
 layout_mode = 2
 text = "Long Break (minutes):"
 
 [node name="LongBreakSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 min_value = 1.0
 max_value = 60.0
@@ -206,11 +221,13 @@ value = 15.0
 rounded = true
 
 [node name="Label4" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
+visible = false
 layout_mode = 2
 text = "Long Break After (cycles):"
 
 [node name="LongBreakIntervalSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 min_value = 1.0
 max_value = 10.0
