@@ -1,28 +1,31 @@
 extends Node
 
-var work_notification_title : StringName = tr("Work Time Finished")
-var work_notification_body : StringName = tr("Time for a break! Look at something 20ft away or walk away")
-var short_break_notification_title : StringName = tr("Short Break Finished")
-var short_break_notification_body : StringName = tr("Back to work!")
-var long_break_notification_title : StringName = tr("Long Break Finished")
-var long_break_notification_body : StringName = tr("Back to work!")
+const NOTIFICATIONS = {
+	TimerManager.TimerType.WORK: {
+		"title": "Work Time Finished",
+		"body": "Time for a break! Look at something 20ft away or walk away"
+	},
+	TimerManager.TimerType.SHORT_BREAK: {
+		"title": "Short Break Finished", 
+		"body": "Back to work!"
+	},
+	TimerManager.TimerType.LONG_BREAK: {
+		"title": "Long Break Finished", 
+		"body": "Back to work!"
+	}
+}
 
 func _ready() -> void:
 	TimerManager.timer_finished.connect(_on_timer_finished)
 
 func _on_timer_finished(timer_type: TimerManager.TimerType) -> void:
-	if Settings.desktop_notifications and not TimerManager.no_popups_and_sound:
-		match timer_type:
-			TimerManager.TimerType.WORK:
-				 #FIXME: Run after sound plays and before next timer
-				show_notification_and_grab_focus.call_deferred(work_notification_title, work_notification_body)
-			TimerManager.TimerType.SHORT_BREAK:
-				show_notification_and_grab_focus.call_deferred(short_break_notification_title, short_break_notification_body)
-			TimerManager.TimerType.LONG_BREAK:
-				show_notification_and_grab_focus.call_deferred(long_break_notification_title, long_break_notification_body)
+	if Settings.get_setting("desktop_notifications") and not TimerManager.no_popups_and_sound:
+		if timer_type in NOTIFICATIONS:
+			var notification : Dictionary = NOTIFICATIONS[timer_type]
+			show_notification_and_grab_focus(notification.title, notification.body)
 
 func show_notification_and_grab_focus(title: String, content: String) -> void:
-	DisplayServer.window_request_attention() #FIXME: Use window's function or just show a smaller notification setting for ppl who dod not want a slow setting
+	DisplayServer.window_request_attention()
 	if OS.get_name() != "Web":
 		OS.alert(content, title)
 	get_tree().get_root().grab_focus()
