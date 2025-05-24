@@ -21,8 +21,8 @@ func _ready() -> void:
 func _on_timer_finished(timer_type: TimerManager.TimerType) -> void:
 	if Settings.get_setting("desktop_notifications") and not TimerManager.no_popups_and_sound:
 		if timer_type in NOTIFICATIONS:
-			var notification : Dictionary = NOTIFICATIONS[timer_type]
-			show_notification_and_grab_focus(notification.title, notification.body)
+			var notif : Dictionary = NOTIFICATIONS[timer_type]
+			show_notification_and_grab_focus(notif.title, notif.body)
 
 func show_notification_and_grab_focus(title: String, content: String) -> void:
 	DisplayServer.window_request_attention()

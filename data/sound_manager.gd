@@ -14,9 +14,9 @@ func _ready() -> void:
 	_load_sounds()
 
 func _load_sounds() -> void:
-	var work_finish_path = Settings.get_setting("work_finish_sound_path")
-	var break_finish_path = Settings.get_setting("break_finish_sound_path")
-	var tick_path = Settings.get_setting("tick_sound_path")
+	var work_finish_path : StringName = Settings.get_setting("work_finish_sound_path")
+	var break_finish_path : StringName = Settings.get_setting("break_finish_sound_path")
+	var tick_path : StringName = Settings.get_setting("tick_sound_path")
 	
 	if work_finish_path and ResourceLoader.exists(work_finish_path):
 		work_finish_sound = load(work_finish_path)
@@ -31,7 +31,7 @@ var work_finish_sound: AudioStream
 var break_finish_sound: AudioStream
 var tick_sound: AudioStream
 
-func _on_setting_changed(key: String, value) -> void:
+func _on_setting_changed(key: String, value: Variant) -> void:
 	match key:
 		"work_finish_sound_path":
 			if ResourceLoader.exists(value):
@@ -58,7 +58,7 @@ func _on_timer_finished(timer_type: TimerManager.TimerType) -> void:
 func _on_timer_updated(time_left: int, _total_time: int) -> void:
 	if Settings.get_setting("sound_enabled") and Settings.get_setting("tick_sound_enabled") and not TimerManager.no_popups_and_sound \
 	and TimerManager.current_timer_type == TimerManager.TimerType.WORK:
-		var should_play_tick = false
+		var should_play_tick := false
 		
 		if Settings.get_setting("play_tick_sound_in_the_last_10_seconds"):
 			should_play_tick = time_left <= 10 and fmod(time_left, 1.0) < 0.05 and time_left > 0

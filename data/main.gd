@@ -56,11 +56,13 @@ func _on_timer_stopped() -> void:
 	_set_timer_inactive_state()
 
 func _update_ui(time_left: int, total_time: int) -> void:
+	@warning_ignore("integer_division")
 	var minutes := int(time_left / 60)
 	var seconds := int(time_left % 60)
 	time_label.text = "%02d:%02d" % [minutes, seconds]
 	
 	if total_time > 0:
+		@warning_ignore("integer_division")
 		progress_bar.value = (time_left / total_time) * 100
 	else:
 		progress_bar.value = 0
@@ -89,7 +91,7 @@ func _on_settings_button_pressed() -> void:
 	add_child(settings_dialog)
 	settings_dialog.popup_centered()
 
-func _notification(what) -> void:
+func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		if Settings.get_setting("minimize_to_tray_on_close"):
 			# Just minimize for now
