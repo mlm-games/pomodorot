@@ -1,3 +1,8 @@
+## v0.10.2
+
+ - (Windows) Fix app not closing unless closed from tray
+ - Fix chocolatey packages
+
 ## v0.10.1
 
  - Fix android builds
