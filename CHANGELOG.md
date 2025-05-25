@@ -1,3 +1,7 @@
+## v0.10.1
+
+ - Fix android builds
+
 ## v0.10.0
 
  - Add new timer display options (show percentage option, hide seconds option)
