@@ -11,10 +11,18 @@ var notification_manager: Node
 var sound_manager: Node
 
 func _ready() -> void:
-	notification_manager = preload("res://data/notification_manager.gd").new()
+	
+	if (OS.get_name() == "Android" or OS.get_name() == "Web") and !FileAccess.file_exists(Settings.SETTINGS_PATH):
+		Settings.values["content_size_scale"] = 2
+		Settings.save_settings()
+
+	Settings.load_settings()
+	Settings._apply_settings()
+	
+	notification_manager = preload("uid://dfsq5txsl3uwg").new()
 	add_child(notification_manager)
 	
-	sound_manager = preload("res://data/sound_manager.gd").new()
+	sound_manager = preload("uid://5nkdkcf1v2o5").new()
 	add_child(sound_manager)
 	
 	TimerManager.timer_updated.connect(_on_timer_updated)

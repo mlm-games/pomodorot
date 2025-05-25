@@ -8,7 +8,16 @@ extends Window
 var setting_controls := {}
 
 func _ready() -> void:
+	##Anim stuff
+	#initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
+	#self.position = Vector2i(100, 100)
+	#size = Vector2i.ONE
+	#
+	#var tween := get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+	#tween.tween_property(self, "size", Vector2i(400, 600)*1.05, 2)
+	#tween.tween_property(self, "size", Vector2i(400, 600), 0.25)
 	# Auto-generate settings UI instead of manually adding 4 times for every entry
+	#await tween.finished
 	generate_settings_ui()
 	
 	if Settings.get_setting("theme_uid") != "":
