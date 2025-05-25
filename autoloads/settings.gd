@@ -61,6 +61,43 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"label": "Allow Uncovering When Skipped",
 		"description": "Returns to normal window size when a break is skipped"
 	},
+	"prevent_alt_f4_close": {
+	"type": "bool", 
+	"default": false, 
+	"section": "general", 
+	"label": "Prevent Alt+F4 Close",
+	"description": "Prevents closing the app with Alt+F4",
+	"platforms": ["Windows", "Linux", "macOS"]
+	},
+	"show_percentage_instead_of_time": {
+		"type": "bool", 
+		"default": false, 
+		"section": "general", 
+		"label": "Show Percentage Instead of Time",
+		"description": "Display progress as percentage rather than remaining time"
+	},
+	"hide_seconds_display": {
+		"type": "bool", 
+		"default": false, 
+		"section": "general", 
+		"label": "Hide Seconds (Minutes Only)",
+		"description": "Show only minutes in the timer display"
+	},
+	"show_pomodoro_counter": {
+		"type": "bool", 
+		"default": false, 
+		"section": "general", 
+		"label": "Show Pomodoro Counter",
+		"description": "Display count of completed pomodoro sessions"
+	},
+	"android_background_mode": {
+		"type": "bool", 
+		"default": false, 
+		"section": "general", 
+		"label": "Android Background Mode",
+		"description": "Allow app to run in background on Android",
+		"platforms": ["Android"]
+	},
 	"play_tick_sound_in_the_last_10_seconds": {
 		"type": "bool", 
 		"default": false, 
@@ -78,6 +115,14 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"max": 10.0,
 		"step": 0.05
 	},
+		"pomodoro_count": {
+		"type": "int", 
+		"default": 0, 
+		"section": "general", 
+		"label": "Pomodoro Count",
+		"description": "Number of completed pomodoro sessions",
+		"hidden": true  #TODO? Don't show in UI, just store the value
+	},
 	"theme_uid": {
 		"type": "option", 
 		"default": "", 
@@ -92,7 +137,8 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 			"green_prod": "uid://ymbk3h18s8kr",
 			"dracula": "uid://d2dc175aatida",
 			"dark_solarised": "uid://bhn4h7qu80ytq",
-			"dark": "uid://cjiej4kk0y2t1"
+			"dark": "uid://cjiej4kk0y2t1",
+			"modern_with_shadows_and_inter": "uid://bqm8k7n3x4p2t"
 		}
 	},
 	

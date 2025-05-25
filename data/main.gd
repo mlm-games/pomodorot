@@ -7,6 +7,8 @@ extends Control
 @onready var stop_button: Button = %StopButton
 @onready var skip_button: Button = %SkipButton
 
+@onready var counter_label: Label = %CounterLabel #TODO: Add it to scene
+
 var notification_manager: Node
 var sound_manager: Node
 
@@ -64,14 +66,30 @@ func _on_timer_stopped() -> void:
 	_set_timer_inactive_state()
 
 func _update_ui(time_left: int, total_time: int) -> void:
-	@warning_ignore("integer_division")
-	var minutes := int(time_left / 60)
-	var seconds := int(time_left % 60)
-	time_label.text = "%02d:%02d" % [minutes, seconds]
+	if Settings.get_setting("show_percentage_instead_of_time"):
+		if total_time > 0:
+			var percentage = ((total_time - time_left) / float(total_time)) * 100
+			time_label.text = "%.0f%%" % percentage
+		else:
+			time_label.text = "0%"
+	else:
+		var minutes := int(time_left / 60)
+		var seconds := int(time_left % 60)
+		
+		if Settings.get_setting("hide_seconds_display"):
+			time_label.text = "%d min" % minutes
+		else:
+			time_label.text = "%02d:%02d" % [minutes, seconds]
+	
+	# Update counter display
+	if Settings.get_setting("show_pomodoro_counter"):
+		counter_label.visible = true
+		counter_label.text = "Pomodoros: %d" % Settings.get_setting("pomodoro_count")
+	else:
+		counter_label.visible = false
 	
 	if total_time > 0:
-		@warning_ignore("integer_division")
-		progress_bar.value = (time_left / total_time) * 100
+		progress_bar.value = (time_left / float(total_time)) * 100
 	else:
 		progress_bar.value = 0
 
@@ -100,9 +118,18 @@ func _on_settings_button_pressed() -> void:
 	settings_dialog.popup_centered()
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		if Settings.get_setting("minimize_to_tray_on_close"):
-			# Just minimize for now
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
-		else:
+	match what:
+		NOTIFICATION_WM_CLOSE_REQUEST:
+			if Settings.get_setting("prevent_alt_f4_close"):
+				return
+			elif Settings.get_setting("minimize_to_tray_on_close"):
+				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+			else:
+				get_tree().quit()
+		NOTIFICATION_WM_GO_BACK_REQUEST:
+			# Handle Android back button
+			if OS.get_name() == "Android" and Settings.get_setting("android_background_mode"):
+				# Move to background instead of closing
+				OS.request_permissions()
+				return
 			get_tree().quit()

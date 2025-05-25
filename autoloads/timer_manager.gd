@@ -104,6 +104,9 @@ func skip_timer() -> void:
 func _on_timer_timeout() -> void:
 	is_running = false
 	current_state = TimerState.FINISHED
+
+	_increment_pomodoro_count()
+	
 	timer_finished.emit(current_timer_type)
 	
 	if Settings.get_setting("auto_start_work_timer") and current_timer_type != TimerType.WORK:
@@ -142,6 +145,12 @@ func _advance_timer_type() -> void:
 				current_timer_type = TimerType.SHORT_BREAK
 		TimerType.SHORT_BREAK, TimerType.LONG_BREAK:
 			current_timer_type = TimerType.WORK
+
+func _increment_pomodoro_count() -> void:
+	if current_timer_type == TimerType.WORK:
+		var current_count = Settings.get_setting("pomodoro_count")
+		Settings.set_setting("pomodoro_count", current_count + 1)
+		Settings.save_settings()
 
 func _load_durations() -> void:
 	work_duration = int(Settings.get_setting("work_duration") * 60)

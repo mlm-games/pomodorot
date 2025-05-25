@@ -157,7 +157,7 @@ func _on_numeric_setting_changed(value: float, key: String) -> void:
 	Settings.set_setting(key, value)
 
 func _on_option_setting_changed(index: int, key: String) -> void:
-	var option_button : OptionButton = setting_controls[key].get_child("OptionButton")
+	var option_button : OptionButton = setting_controls[key].get_child(1)
 	var value : Variant = option_button.get_item_metadata(index)
 	Settings.set_setting(key, value)
 

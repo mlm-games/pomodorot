@@ -27,5 +27,5 @@ func _on_timer_finished(timer_type: TimerManager.TimerType) -> void:
 func show_notification_and_grab_focus(title: String, content: String) -> void:
 	DisplayServer.window_request_attention()
 	if OS.get_name() != "Web":
-		OS.alert(content, title)
+		OS.alert.call_deferred(content, title) # Calling deferred for having the audio play before the alert is shown
 	get_tree().get_root().grab_focus()

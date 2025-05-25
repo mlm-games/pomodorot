@@ -1,12 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://xwgfdfp0i4u0"]
+[gd_scene load_steps=2 format=3 uid="uid://xwgfdfp0i4u0"]
 
 [ext_resource type="Script" uid="uid://bu2mbyrsocpnu" path="res://data/main.gd" id="1_f0jm3"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfwe6"]
-bg_color = Color(0.121569, 0.14902, 0.266667, 1)
-
-[sub_resource type="Theme" id="Theme_s0khs"]
-Panel/styles/panel = SubResource("StyleBoxFlat_bfwe6")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -18,7 +12,6 @@ grow_vertical = 2
 script = ExtResource("1_f0jm3")
 
 [node name="Panel" type="Panel" parent="."]
-self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +20,24 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
+[node name="CounterLabel" type="Label" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = 184.0
+offset_right = 60.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "Pomodoros: 0"
+horizontal_alignment = 1
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
@@ -34,7 +45,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_s0khs")
 theme_override_constants/separation = 16
 alignment = 1
 
@@ -66,12 +76,14 @@ alignment = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+theme_type_variation = &"PrimaryButton"
 text = "Start"
 
 [node name="StopButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+theme_type_variation = &"SecondaryButton"
 disabled = true
 text = "Stop"
 

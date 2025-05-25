@@ -11,7 +11,7 @@ func _ready() -> void:
 	var menu: PopupMenu = PopupMenu.new()
 	add_child(menu)
 	menu.add_item("Show window", 1)
-	menu.add_item("Quit", 2, KEY_ALT + KEY_F4)
+	menu.add_item("Quit", 2, KEY_ALT | KEY_F4)
 	si.menu = menu.get_path()
 	menu.id_pressed.connect(_on_menu_item_pressed)
 	get_tree().set_auto_accept_quit(false)
