@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 $packageName = 'pomodorot'
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$url = 'https://github.com/mlm-games/pomodorot/releases/download/0.0.0/pomodorot.exe'
+$url = 'https://github.com/mlm-games/pomodorot/releases/download/0.10.2/pomodorot.exe'
 
 $packageArgs = @{
   packageName   = $packageName

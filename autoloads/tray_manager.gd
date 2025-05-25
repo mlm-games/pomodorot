@@ -2,7 +2,7 @@
 extends Node
 
 func _ready() -> void:
-	var si = StatusIndicator.new()
+	var si : StatusIndicator = StatusIndicator.new()
 	si.icon = load("res://fastlane/metadata/android/en-US/images/icon.png")
 	si.tooltip = "Pomodorot"
 	si.pressed.connect(_on_si_pressed)
@@ -14,10 +14,8 @@ func _ready() -> void:
 	menu.add_item("Quit", 2, KEY_ALT | KEY_F4)
 	si.menu = menu.get_path()
 	menu.id_pressed.connect(_on_menu_item_pressed)
-	get_tree().set_auto_accept_quit(false)
 
-
-func _on_menu_item_pressed(id):
+func _on_menu_item_pressed(id: int) -> void:
 	match id:
 		1:
 			get_tree().get_root().show()
@@ -25,7 +23,7 @@ func _on_menu_item_pressed(id):
 			get_tree().quit()
 			
 
-func _on_si_pressed(key, _position):
+func _on_si_pressed(key: MouseButton, _position: Vector2) -> void:
 	if key == MOUSE_BUTTON_LEFT:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 		get_window().show()
