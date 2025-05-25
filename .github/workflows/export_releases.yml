@@ -248,7 +248,7 @@ jobs:
       - name: Submit to WinGet
         uses: vedantmgoyal2009/winget-releaser@v2
         with:
-          identifier: MLMGames.pomodorot
+          identifier: MLMGames.Pomodorot
           version: ${{ inputs.version_name }}
           release-tag: ${{ inputs.version_name }}
           token: ${{ secrets.GH_TOKEN }}
