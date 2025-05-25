@@ -1,3 +1,10 @@
+## v0.10.0
+
+ - Add new timer display options (show percentage option, hide seconds option)
+ - Fix audio not playing before alert
+ - Add blocking closure of app option
+ - Add a new theme with a different font (inter)
+
 ## v0.9.0
 
  - Add theming support in settings
