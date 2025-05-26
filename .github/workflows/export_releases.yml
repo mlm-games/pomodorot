@@ -231,13 +231,13 @@ jobs:
           
           Write-Output "Updated chocolateyinstall.ps1 with new URL and checksum"
             
-            - name: Pack and push Chocolatey package
-              shell: pwsh
-              env:
-                CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
-              run: |
-                choco pack .\chocolatey\pomodorot.nuspec
-                choco push pomodorot.${{ inputs.version_name }}.nupkg --source https://push.chocolatey.org/ --api-key $env:CHOCO_API_KEY
+      - name: Pack and push Chocolatey package
+        shell: pwsh
+        env:
+          CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
+        run: |
+          choco pack .\chocolatey\pomodorot.nuspec
+          choco push pomodorot.${{ inputs.version_name }}.nupkg --source https://push.chocolatey.org/ --api-key $env:CHOCO_API_KEY
 
   publish-winget:
     needs: [prepare-and-build]
@@ -270,6 +270,12 @@ jobs:
         with:
           name: Linux-build
           path: ./linux-build
+
+      - name: Download Linux arm64 build
+        uses: actions/download-artifact@v4
+        with:
+          name: Linux-arm64-build
+          path: ./linux-arm64-build
       
       - name: Calculate SHA256 checksums
         id: checksums
