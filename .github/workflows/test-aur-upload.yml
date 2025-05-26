@@ -61,7 +61,7 @@ jobs:
           EOF
       
       - name: Publish to AUR
-        uses: ATGardner/aur-publish-action@v1.0.1
+        uses: KSXGitHub/github-actions-deploy-aur@v4
         with:
           pkgname: pomodorot-bin
           pkgbuild: aur-package/PKGBUILD
