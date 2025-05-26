@@ -26,6 +26,11 @@ on:
         required: false
         default: 'false'
         type: boolean
+      publish_to_aur:
+        description: 'Publish to AUR'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   commit-vercode-changes:
@@ -252,5 +257,71 @@ jobs:
           version: ${{ inputs.version_name }}
           release-tag: ${{ inputs.version_name }}
           token: ${{ secrets.GH_TOKEN }}
+
+  update-aur:
+    needs: [prepare-and-build]
+    runs-on: ubuntu-latest
+    if: ${{ inputs.publish_to_aur == true }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download Linux build
+        uses: actions/download-artifact@v4
+        with:
+          name: Linux-build
+          path: ./linux-build
+      
+      - name: Calculate SHA256 checksums
+        id: checksums
+        run: |
+          if [ ! -f "linux-build/pomodorot.x86_64" ]; then
+              echo "Error: x64 binary not found"
+              ls -la linux-build/
+              exit 1
+            fi
+            if [ ! -f "linux-arm64-build/pomodorot.arm64" ]; then
+              echo "Error: ARM64 binary not found"
+              ls -la linux-arm64-build/
+              exit 1
+            fi
+            
+          X64_HASH=$(sha256sum linux-build/pomodorot.x86_64 | cut -d ' ' -f 1)
+          ARM64_HASH=$(sha256sum linux-arm64-build/pomodorot.arm64 | cut -d ' ' -f 1)
+          echo "x64_hash=$X64_HASH" >> $GITHUB_OUTPUT
+          echo "arm64_hash=$ARM64_HASH" >> $GITHUB_OUTPUT
+      
+      - name: Publish to AUR
+        uses: KSXGitHub/github-actions-deploy-aur@v2.7.2
+        with:
+          pkgname: pomodorot-bin
+          pkgbuild: |
+            # Maintainer: MLM-stuff <gfxoxinzh@mozmail.com>
+            pkgname=pomodorot-bin
+            pkgver=${{ inputs.version_name }}
+            pkgrel=1
+            pkgdesc="A simple pomodoro timer application (binary release)"
+            arch=('x86_64' 'aarch64')
+            url="https://github.com/mlm-games/pomodorot"
+            license=('GPL3')
+            depends=('glibc' 'libx11' 'libxcursor' 'libxinerama' 'libxrandr' 'libxi' 'alsa-lib' 'pulseaudio')
+            provides=('pomodorot')
+            conflicts=('pomodorot')
+            source_x86_64=("pomodorot-${{ inputs.version_name }}-x64::https://github.com/mlm-games/pomodorot/releases/download/${{ inputs.version_name }}/pomodorot.x86_64")
+            source_aarch64=("pomodorot-${{ inputs.version_name }}-arm64::https://github.com/mlm-games/pomodorot/releases/download/${{ inputs.version_name }}/pomodorot.arm64")
+            sha256sums_x86_64=('${{ steps.checksums.outputs.x64_hash }}')
+            sha256sums_aarch64=('${{ steps.checksums.outputs.arm64_hash }}')
+            
+            package() {
+                if [[ $CARCH == "x86_64" ]]; then
+                    install -Dm755 "$srcdir/pomodorot-${{ inputs.version_name }}-x64" "$pkgdir/usr/bin/pomodorot"
+                elif [[ $CARCH == "aarch64" ]]; then
+                    install -Dm755 "$srcdir/pomodorot-${{ inputs.version_name }}-arm64" "$pkgdir/usr/bin/pomodorot"
+                fi
+            }
+          commit_username: MLM-stuff
+          commit_email: gfxoxinzh@mozmail.com
+          ssh_private_key: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+          commit_message: "Update to version ${{ inputs.version_name }}"
+
 
 
