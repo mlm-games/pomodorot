@@ -121,6 +121,7 @@ func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_WM_CLOSE_REQUEST:
 			if Settings.get_setting("prevent_alt_f4_close"):
+				get_tree().auto_accept_quit = false
 				return
 			elif Settings.get_setting("minimize_to_tray_on_close"):
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
