@@ -1,3 +1,7 @@
+## v0.10.3
+
+ - Update export_releases.yml
+
 ## v0.10.2
 
  - (Windows) Fix app not closing unless closed from tray
