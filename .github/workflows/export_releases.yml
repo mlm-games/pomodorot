@@ -11,6 +11,11 @@ on:
         required: false
         default: 'true'
         type: boolean
+      auto_generate_changelog:
+        description: 'Auto-generate changelog from commits'
+        required: false
+        default: false
+        type: boolean
       mark_prerelease:
         description: 'Mark as prerelease'
         required: true
