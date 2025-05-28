@@ -44,6 +44,66 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
 
+      - name: Auto-generate changelog entry # (with deduplication)
+        if: ${{ inputs.auto_generate_changelog == true }}
+        run: |
+          # Get the latest tag
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          
+          if [ -z "$LATEST_TAG" ]; then
+            echo "No previous tags found, getting all commits"
+            COMMIT_RANGE="HEAD"
+          else
+            echo "Getting commits since $LATEST_TAG"
+            COMMIT_RANGE="${LATEST_TAG}..HEAD"
+          fi
+          
+          # Check if changelog entry already exists
+          if grep -q "## v${{ inputs.version_name }}" CHANGELOG.md; then
+            echo "Changelog entry for v${{ inputs.version_name }} already exists, skipping auto-generation"
+          else
+            echo "Creating changelog entry for v${{ inputs.version_name }}"
+            
+            # Get commits and format them, excluding merge commits and version bumps
+            RAW_COMMITS=$(git log $COMMIT_RANGE \
+              --oneline \
+              --no-merges \
+              --grep="^Update version to" --invert-grep \
+              --grep="^Merge " --invert-grep \
+              --grep="^Auto-generate changelog" --invert-grep \
+              --pretty=format:"%s")
+            
+            # Advanced deduplication: case-insensitive, trimmed whitespace
+            COMMITS=$(echo "$RAW_COMMITS" | \
+              sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
+              awk '!seen[tolower($0)]++' | \
+              sed 's/^/ - /' | \
+              grep -v "^ - $")  # Remove empty lines
+            
+            # Create temporary file with new entry
+            cat > temp_changelog.md << EOF
+          ## v${{ inputs.version_name }}
+          
+          $COMMITS
+          
+          EOF
+            
+            # Prepend to existing changelog
+            cat CHANGELOG.md >> temp_changelog.md
+            mv temp_changelog.md CHANGELOG.md
+            
+            # Commit the changelog
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Actions"
+            git add CHANGELOG.md
+            git commit -m "Auto-generate changelog for v${{ inputs.version_name }}"
+            git push
+            
+            COMMIT_COUNT=$(echo "$COMMITS" | grep -c "^ - " || echo "0")
+            ORIGINAL_COUNT=$(echo "$RAW_COMMITS" | wc -l)
+            echo "Auto-generated changelog entry with $COMMIT_COUNT unique commits (filtered from $ORIGINAL_COUNT total commits)"
+          fi
+
     
       - name: Validate Version in Changelog
         run: |
