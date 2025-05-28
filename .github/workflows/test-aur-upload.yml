@@ -43,21 +43,44 @@ jobs:
           arch=('x86_64' 'aarch64')
           url="https://github.com/mlm-games/pomodorot"
           license=('GPL3')
-          depends=('glibc' 'libx11' 'libxcursor' 'libxinerama' 'libxrandr' 'libxi' 'alsa-lib' 'pipewire-pulse')
-          optdepends=('pulseaudio: for older PulseAudio support')
+          depends=('glibc' 'libx11' 'libxcursor' 'libxinerama' 'libxrandr' 'libxi' 'alsa-lib')
+          optdepends=('pipewire-pulse: for PipeWire audio support'
+                      'pulseaudio: for PulseAudio audio support')
           provides=('pomodorot')
           conflicts=('pomodorot')
+          options=('!strip')
           source_x86_64=("pomodorot-${{ inputs.version_name }}-x64::https://github.com/mlm-games/pomodorot/releases/download/${{ inputs.version_name }}/pomodorot.x86_64")
           source_aarch64=("pomodorot-${{ inputs.version_name }}-arm64::https://github.com/mlm-games/pomodorot/releases/download/${{ inputs.version_name }}/pomodorot.arm64")
           sha256sums_x86_64=('${{ steps.checksums.outputs.x64_hash }}')
           sha256sums_aarch64=('${{ steps.checksums.outputs.arm64_hash }}')
           
           package() {
+              # Create directories
+              install -d "${pkgdir}/usr/bin/"
+              install -d "${pkgdir}/usr/share/applications/"
+              install -d "${pkgdir}/opt/${pkgname}/"
+          
+              # Install binary to /opt and create symlink
               if [[ $CARCH == "x86_64" ]]; then
-                  install -Dm755 "$srcdir/pomodorot-${{ inputs.version_name }}-x64" "$pkgdir/usr/bin/pomodorot"
+                  install -Dm755 "$srcdir/pomodorot-${{ inputs.version_name }}-x64" "${pkgdir}/opt/${pkgname}/pomodorot"
               elif [[ $CARCH == "aarch64" ]]; then
-                  install -Dm755 "$srcdir/pomodorot-${{ inputs.version_name }}-arm64" "$pkgdir/usr/bin/pomodorot"
+                  install -Dm755 "$srcdir/pomodorot-${{ inputs.version_name }}-arm64" "${pkgdir}/opt/${pkgname}/pomodorot"
               fi
+          
+              # Create symlink in /usr/bin
+              ln -s "/opt/${pkgname}/pomodorot" "${pkgdir}/usr/bin/pomodorot"
+          
+              # Create desktop entry
+              cat > "${pkgdir}/usr/share/applications/pomodorot.desktop" << EOF
+          [Desktop Entry]
+          Name=Pomodorot
+          Exec=pomodorot
+          Terminal=false
+          Type=Application
+          Comment=A simple pomodoro timer application
+          Categories=Utility;Office;
+          StartupNotify=true
+          EOF
           }
           EOF
       
