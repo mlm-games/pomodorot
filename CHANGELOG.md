@@ -1,6 +1,6 @@
 ## v0.10.3
 
- - Update export_releases.yml
+ - Fix alt+f4 or closing prevention setting
 
 ## v0.10.2
 
