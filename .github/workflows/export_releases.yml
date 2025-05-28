@@ -259,6 +259,33 @@ jobs:
           name: Windows_Desktop-build
           path: ./choco-package
       
+      - name: List downloaded files
+        shell: pwsh
+        run: |
+          Write-Output "Files in choco-package:"
+          Get-ChildItem -Path ".\choco-package" -Recurse
+      
+      - name: Generate checksums if missing
+        shell: pwsh
+        run: |
+          if (-not (Test-Path ".\choco-package\SHA256SUMS.txt")) {
+            Write-Output "SHA256SUMS.txt not found, generating checksums..."
+            $files = Get-ChildItem -Path ".\choco-package" -File
+            $checksumContent = @()
+            $checksumContent += "# SHA256 Checksums for Windows Desktop"
+            $checksumContent += "Generated on $(Get-Date)"
+            $checksumContent += ""
+            
+            foreach ($file in $files) {
+              $hash = Get-FileHash -Path $file.FullName -Algorithm SHA256
+              $checksumContent += "$($hash.Hash.ToLower())  $($file.Name)"
+              Write-Output "File: $($file.Name)"
+              Write-Output "SHA256: $($hash.Hash.ToLower())"
+            }
+            
+            $checksumContent | Out-File -FilePath ".\choco-package\SHA256SUMS.txt" -Encoding UTF8
+          }
+      
       - name: Setup Chocolatey
         uses: crazy-max/ghaction-chocolatey@v3
         with:
@@ -275,7 +302,7 @@ jobs:
       - name: Update Chocolatey install script
         shell: pwsh
         run: |
-          # Get the SHA256 hash from the generated checksums file
+          # Get the SHA256 hash from the checksums file
           $checksumFile = Get-Content ".\choco-package\SHA256SUMS.txt"
           $exeFileName = "pomodorot.exe"
           $hashLine = $checksumFile | Where-Object { $_ -match "$exeFileName$" }
@@ -284,6 +311,8 @@ jobs:
             Write-Output "Found hash: $hash for $exeFileName"
           } else {
             Write-Error "Could not find hash for $exeFileName in SHA256SUMS.txt"
+            Write-Output "Available files in checksums:"
+            $checksumFile | ForEach-Object { Write-Output $_ }
             exit 1
           }
           
@@ -295,7 +324,7 @@ jobs:
           $content | Set-Content $installPath
           
           Write-Output "Updated chocolateyinstall.ps1 with new URL and checksum"
-            
+      
       - name: Pack and push Chocolatey package
         shell: pwsh
         env:
@@ -336,7 +365,7 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'aur-publish.yml',
+              workflow_id: 'test-aur-upload.yml',
               ref: 'main',
               inputs: {
                 version_name: '${{ inputs.version_name }}',
