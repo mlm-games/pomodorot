@@ -1,4 +1,4 @@
 v0.10.3
 
- - Update export_releases.yml
+ - Fix close prevention setting
 
