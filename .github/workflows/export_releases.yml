@@ -49,7 +49,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
 
-      - name: Auto-generate changelog entry # (with deduplication)
+      - name: Auto-generate changelog entry (Simpler approach)
         if: ${{ inputs.auto_generate_changelog == true }}
         run: |
           # Get the latest tag
@@ -69,32 +69,30 @@ jobs:
           else
             echo "Creating changelog entry for v${{ inputs.version_name }}"
             
-            # Get commits and format them, excluding merge commits and version bumps
-            RAW_COMMITS=$(git log $COMMIT_RANGE \
+            # Get commits, exclude unwanted ones, remove duplicates, and format
+            git log $COMMIT_RANGE \
               --oneline \
               --no-merges \
               --grep="^Update version to" --invert-grep \
               --grep="^Merge " --invert-grep \
               --grep="^Auto-generate changelog" --invert-grep \
-              --pretty=format:"%s")
+              --pretty=format:"%s" | \
+              awk '!seen[$0]++' | \
+              sed 's/^/ - /' > /tmp/commits.txt
             
-            # Advanced deduplication: case-insensitive, trimmed whitespace
-            COMMITS=$(echo "$RAW_COMMITS" | \
-              sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | \
-              awk '!seen[tolower($0)]++' | \
-              sed 's/^/ - /' | \
-              grep -v "^ - $")  # Remove empty lines
+            echo "Generated commits:"
+            cat /tmp/commits.txt
+            echo "---"
             
-            # Create temporary file with new entry
-            cat > temp_changelog.md << EOF
-          ## v${{ inputs.version_name }}
-          
-          $COMMITS
-          
-          EOF
+            # Create the changelog entry
+            {
+              echo "## v${{ inputs.version_name }}"
+              echo ""
+              cat /tmp/commits.txt
+              echo ""
+              cat CHANGELOG.md
+            } > temp_changelog.md
             
-            # Prepend to existing changelog
-            cat CHANGELOG.md >> temp_changelog.md
             mv temp_changelog.md CHANGELOG.md
             
             # Commit the changelog
@@ -104,9 +102,11 @@ jobs:
             git commit -m "Auto-generate changelog for v${{ inputs.version_name }}"
             git push
             
-            COMMIT_COUNT=$(echo "$COMMITS" | grep -c "^ - " || echo "0")
-            ORIGINAL_COUNT=$(echo "$RAW_COMMITS" | wc -l)
-            echo "Auto-generated changelog entry with $COMMIT_COUNT unique commits (filtered from $ORIGINAL_COUNT total commits)"
+            COMMIT_COUNT=$(wc -l < /tmp/commits.txt)
+            echo "Auto-generated changelog entry with $COMMIT_COUNT unique commits"
+            
+            # Cleanup
+            rm -f /tmp/commits.txt
           fi
 
     
