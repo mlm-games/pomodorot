@@ -1,8 +1,13 @@
 # Pomodorot - Godot Pomodoro Timer
 
-A simple, customizable Pomodoro timer application built with Godot.
+[![F-Droid Version](https://img.shields.io/f-droid/v/app.pomodorot)](https://f-droid.org/packages/app.pomodorot/)
+[![GitHub Release](https://img.shields.io/github/v/release/mlm-games/pomodorot)](https://github.com/mlm-games/pomodorot/releases/latest)
+[![License](https://img.shields.io/github/license/mlm-games/pomodorot)](LICENSE.md)
 
-Mainly made for getting up every 20 mins (to follow the 20 min rule of looking away for 20 secs and even maintaining proper blood circ.)
+
+A simple, customizable Pomodoro timer application built with Godot. Helps you follow the 20-20-20 rule (look away every 20 minutes for 20 seconds).
+
+> Initially I had made it for getting up every 20 mins (to follow the 20 min rule of looking away for 20 secs and even maintaining proper blood circ.)
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
 	 alt="Get it on F-Droid"
@@ -20,6 +25,7 @@ Or download the latest APK from the [Releases Section](https://github.com/mlm-ga
 - Minimization to system tray
 - Always-on-top option
 - Auto-start timers
+- Cross-platform (Windows, Linux, macOS, Android)
 
 ## Command Line Options
 
@@ -53,6 +59,16 @@ The application supports the following command line options:
 
 1. Clone this repository
 2. Open it in Godot and thats it;
+
+## Version Trackers
+
+| Platform    | Version |
+|-------------|---------|
+| F-Droid     | [![F-Droid Version](https://img.shields.io/f-droid/v/app.pomodorot)](https://f-droid.org/packages/app.pomodorot/) |
+| Chocolatey  | [![Chocolatey Version](https://img.shields.io/chocolatey/v/pomodorot)](https://community.chocolatey.org/packages/pomodorot) |
+| WinGet      | ![WinGet Package Version](https://img.shields.io/winget/v/MLMGames.Pomodorot) |
+| AUR         | [![AUR Version](https://img.shields.io/aur/version/pomodorot-bin)](https://aur.archlinux.org/packages/pomodorot-bin) |
+
 
 ## License
 
