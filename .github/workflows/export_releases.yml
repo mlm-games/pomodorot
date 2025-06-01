@@ -64,19 +64,12 @@ jobs:
           changelog-path: 'CHANGELOG.md'
           version-file-path: './fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt'
           version-code: '${{ steps.prev_version.outputs.new_code }}'
-          metainfo-path: './com.yourapp.metainfo.xml'  # Add your Flathub metainfo path
+          metainfo-path: './others/flathub/io.github.mlm_games.pomodorot.metainfo.xml'  # TODO: Change here when copying
           exclude-patterns: 'Update version to,Merge ,Auto-generate changelog'
           auto-commit: 'true'
           commit-message: 'Update release notes for v{{version}}'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      - name: Check Existing Version Code
-        run: |
-          if [ -f "./fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt" ]; then
-            echo "Error: Version code ${{ steps.prev_version.outputs.new_code }} already exists in metadata"
-            exit 1
-          fi
           
       - name: Commit Previous Version Code
         run: |
