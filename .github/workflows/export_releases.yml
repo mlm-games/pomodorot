@@ -43,79 +43,11 @@ jobs:
     permissions:
       contents: write
     outputs:
-      new_version_code: ${{ steps.prev_version.outputs.new_code }}  # Add this to share the output for the release
+      new_version_code: ${{ steps.prev_version.outputs.new_code }}
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_TOKEN }}
-
-      - name: Auto-generate changelog entry (Simpler approach)
-        if: ${{ inputs.auto_generate_changelog == true }}
-        run: |
-          # Get the latest tag
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          
-          if [ -z "$LATEST_TAG" ]; then
-            echo "No previous tags found, getting all commits"
-            COMMIT_RANGE="HEAD"
-          else
-            echo "Getting commits since $LATEST_TAG"
-            COMMIT_RANGE="${LATEST_TAG}..HEAD"
-          fi
-          
-          # Check if changelog entry already exists
-          if grep -q "## v${{ inputs.version_name }}" CHANGELOG.md; then
-            echo "Changelog entry for v${{ inputs.version_name }} already exists, skipping auto-generation"
-          else
-            echo "Creating changelog entry for v${{ inputs.version_name }}"
-            
-            # Get commits, exclude unwanted ones, remove duplicates, and format
-            git log $COMMIT_RANGE \
-              --oneline \
-              --no-merges \
-              --grep="^Update version to" --invert-grep \
-              --grep="^Merge " --invert-grep \
-              --grep="^Auto-generate changelog" --invert-grep \
-              --pretty=format:"%s" | \
-              awk '!seen[$0]++' | \
-              sed 's/^/ - /' > /tmp/commits.txt
-            
-            echo "Generated commits:"
-            cat /tmp/commits.txt
-            echo "---"
-            
-            # Create the changelog entry
-            {
-              echo "## v${{ inputs.version_name }}"
-              echo ""
-              cat /tmp/commits.txt
-              echo ""
-              cat CHANGELOG.md
-            } > temp_changelog.md
-            
-            mv temp_changelog.md CHANGELOG.md
-            
-            # Commit the changelog
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Actions"
-            git add CHANGELOG.md
-            git commit -m "Auto-generate changelog for v${{ inputs.version_name }}"
-            git push
-            
-            COMMIT_COUNT=$(wc -l < /tmp/commits.txt)
-            echo "Auto-generated changelog entry with $COMMIT_COUNT unique commits"
-            
-            # Cleanup
-            rm -f /tmp/commits.txt
-          fi
-
-    
-      - name: Validate Version in Changelog
-        run: |
-          if ! grep -q "## v${{ inputs.version_name }}" CHANGELOG.md; then
-          echo "Error: Version ${{ inputs.version_name }} not found in CHANGELOG.md"
-          exit 1
-          fi
 
       - name: Get Previous Version Code
         id: prev_version
@@ -125,22 +57,27 @@ jobs:
           echo "prev_code=${PREV_CODE}" >> $GITHUB_OUTPUT
           echo "new_code=${NEW_CODE}" >> $GITHUB_OUTPUT
 
+      - name: Generate Release Notes
+        uses: mlm-games/multi-release-notes@v1
+        with:
+          version: ${{ inputs.version_name }}
+          changelog-path: 'CHANGELOG.md'
+          version-file-path: './fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt'
+          version-code: '${{ steps.prev_version.outputs.new_code }}'
+          metainfo-path: './com.yourapp.metainfo.xml'  # Add your Flathub metainfo path
+          exclude-patterns: 'Update version to,Merge ,Auto-generate changelog'
+          auto-commit: 'true'
+          commit-message: 'Update release notes for v{{version}}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - name: Check Existing Version Code
         run: |
           if [ -f "./fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt" ]; then
             echo "Error: Version code ${{ steps.prev_version.outputs.new_code }} already exists in metadata"
             exit 1
           fi
-
-      - name: Extract Changelog
-        run: |
-          mkdir -p ./fastlane/metadata/android/en-US/changelogs
-          sed -n "/## v${{ inputs.version_name }}/,/## v/p" CHANGELOG.md | \
-          sed '$d' | sed '1s/^## //' > \
-          "./fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt"
           
-      
-      
       - name: Commit Previous Version Code
         run: |
           echo "Previous version code: ${{ steps.prev_version.outputs.prev_code }}"
