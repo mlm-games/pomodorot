@@ -58,7 +58,7 @@ jobs:
           echo "new_code=${NEW_CODE}" >> $GITHUB_OUTPUT
 
       - name: Generate Release Notes
-        uses: mlm-games/multi-release-notes@v1
+        uses: mlm-games/release-notes-generator@main
         with:
           version: ${{ inputs.version_name }}
           changelog-path: 'CHANGELOG.md'
