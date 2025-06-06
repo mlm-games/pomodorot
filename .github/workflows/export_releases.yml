@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Previous Version Code
         id: prev_version
@@ -69,7 +69,7 @@ jobs:
           auto-commit: 'true'
           commit-message: 'Update release notes for v{{version}}'
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Commit Previous Version Code
         run: |
@@ -280,7 +280,7 @@ jobs:
           identifier: MLMGames.Pomodorot
           version: ${{ inputs.version_name }}
           release-tag: ${{ inputs.version_name }}
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   update-aur:
     needs: [prepare-and-build]
@@ -290,7 +290,7 @@ jobs:
       - name: Trigger AUR publish workflow
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
