@@ -76,12 +76,6 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"label": "Show Pomodoro Counter",
 		"description": "Display count of completed pomodoro sessions"
 	},
-	"android_background_mode": {
-		"type": "bool", "default": false, "section": "general", "advanced": true,
-		"label": "Android Background Mode",
-		"description": "Allow app to run in background on Android",
-		"platforms": ["android"]
-	},
 	"play_tick_sound_in_the_last_10_seconds": {
 		"type": "bool", "default": false, "section": "general", "advanced": true,
 		"label": "Play Tick Sound For Last 10 Seconds",

@@ -143,9 +143,4 @@ func _notification(what: int) -> void:
 			else:
 				get_tree().quit()
 		NOTIFICATION_WM_GO_BACK_REQUEST:
-			# Handle Android back button
-			if OS.get_name() == "Android" and Settings.get_setting("android_background_mode"):
-				# Move to background instead of closing
-				OS.request_permissions()
-				return
 			get_tree().quit()
