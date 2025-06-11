@@ -237,6 +237,15 @@ rounded = true
 [node name="HSeparator3" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="HSeparator4" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AdvancedSettingsCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Show Advanced Settings"
+
 [node name="ButtonContainer" type="HBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
