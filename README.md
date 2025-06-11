@@ -22,7 +22,7 @@ Or download the latest APK from the [Releases Section](https://github.com/mlm-ga
 - Command line options for automation
 - Desktop notifications
 - Sound alerts
-- Minimization to system tray
+- Minimization to system tray (Only for windows and macOS, linux users can use RBTray or similar)
 - Always-on-top option
 - Auto-start timers
 - Cross-platform (Windows, Linux, macOS, Android)
@@ -76,4 +76,4 @@ GPL-3.0 [License](LICENSE.md)
 
 ## Credits
 
-Heavily based on pomodorolm (but wanted another one for a command line option for the timer to automatically start when the system boots up...)
+Heavily based on pomodorolm (but wanted another one for a command-line option for the timer to automatically start, for autostarting when the system boots up...)
