@@ -1,3 +1,8 @@
+## v0.11.0
+
+- Add proper settings organisation, fix timer settings not applying, show asetting only if applicable for the current OS by @mlm-studios
+
+
 ## v0.10.3
 
  - Fix alt+f4 or closing prevention setting

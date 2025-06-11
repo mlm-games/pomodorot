@@ -52,6 +52,13 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="0.11.0" date="2025-06-11">
+      <description>
+        <ul>
+          <li>Add proper settings organisation, fix timer settings not applying, show asetting only if applicable for the current OS by @mlm-studios</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.8.1" date="2025-03-08">
       <url type="details">https://github.com/mlm-games/pomodorot/releases</url>
     </release>

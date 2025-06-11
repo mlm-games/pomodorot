@@ -1,0 +1,1 @@
+- Add proper settings organisation, fix timer settings not applying, show asetting only if applicable for the current OS by @mlm-studios
