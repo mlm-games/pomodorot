@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://xwgfdfp0i4u0"]
+[gd_scene load_steps=3 format=3 uid="uid://xwgfdfp0i4u0"]
 
 [ext_resource type="Script" uid="uid://bu2mbyrsocpnu" path="res://data/main.gd" id="1_f0jm3"]
+[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/anim_buttons/anim_button.gd" id="2_s0khs"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -19,6 +20,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="ModalOverlay" type="ColorRect" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
 
 [node name="CounterLabel" type="Label" parent="Panel"]
 unique_name_in_owner = true
@@ -76,23 +87,32 @@ alignment = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+size_flags_vertical = 4
 theme_type_variation = &"PrimaryButton"
 text = "Start"
+script = ExtResource("2_s0khs")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="StopButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+size_flags_vertical = 4
 theme_type_variation = &"SecondaryButton"
 disabled = true
 text = "Stop"
+script = ExtResource("2_s0khs")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="SkipButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+size_flags_vertical = 4
 disabled = true
 text = "Skip"
+script = ExtResource("2_s0khs")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -104,7 +124,10 @@ alignment = 1
 [node name="SettingsButton" type="Button" parent="Panel/VBoxContainer/BottomButtonContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+size_flags_vertical = 4
 text = "⚙"
+script = ExtResource("2_s0khs")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/StartPauseButton" to="." method="_on_start_pause_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/StopButton" to="." method="_on_stop_button_pressed"]

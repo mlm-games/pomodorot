@@ -7,7 +7,8 @@ extends Control
 @onready var stop_button: Button = %StopButton
 @onready var skip_button: Button = %SkipButton
 
-@onready var counter_label: Label = %CounterLabel #TODO: Add it to scene
+@onready var modal_overlay: ColorRect = %ModalOverlay
+@onready var counter_label: Label = %CounterLabel
 
 var notification_manager: Node
 var sound_manager: Node
@@ -41,6 +42,11 @@ func _on_timer_updated(time_left: int, total_time: int) -> void:
 	_update_ui(time_left, total_time)
 
 func _on_timer_started(timer_type: TimerManager.TimerType) -> void:
+	#anim
+	progress_bar.value = 0
+	var tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(progress_bar, "value", 100, 0.5).from(0)
+	
 	match timer_type:
 		TimerManager.TimerType.WORK:
 			status_label.text = "Working"
@@ -85,6 +91,7 @@ func _update_ui(time_left: int, total_time: int) -> void:
 	if Settings.get_setting("show_pomodoro_counter"):
 		counter_label.visible = true
 		counter_label.text = "Pomodoros: %d" % Settings.get_setting("pomodoro_count")
+		_animate_counter()
 	else:
 		counter_label.visible = false
 	
@@ -92,6 +99,13 @@ func _update_ui(time_left: int, total_time: int) -> void:
 		progress_bar.value = (time_left / float(total_time)) * 100
 	else:
 		progress_bar.value = 0
+
+func _animate_counter():
+	if not counter_label.visible: return
+	
+	var tween = create_tween()
+	tween.tween_property(counter_label, "scale", Vector2(1.5, 1.5), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(counter_label, "scale", Vector2.ONE, 0.4).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 
 func _set_timer_inactive_state() -> void:
 	start_pause_button.text = "Start"
@@ -114,8 +128,9 @@ func _on_skip_button_pressed() -> void:
 
 func _on_settings_button_pressed() -> void:
 	var settings_dialog := preload("res://data/settings_dialog.tscn").instantiate()
+	settings_dialog.overlay_node = modal_overlay
 	add_child(settings_dialog)
-	settings_dialog.popup_centered()
+	settings_dialog.popup_animated()
 
 func _notification(what: int) -> void:
 	match what:

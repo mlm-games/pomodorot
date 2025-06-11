@@ -1,22 +1,55 @@
 extends Window
 
+const initial_size = Vector2i(400, 600)
+
 @onready var general_container := %GeneralSettings
 @onready var sound_container := %SoundSettings
 @onready var timer_container := %TimerSettings
 @onready var advanced_check := %AdvancedSettingsCheck
 
-# Store created controls by setting key for easy access
+var overlay_node: ColorRect
+
 var setting_controls := {}
 
 func _ready() -> void:
 	generate_settings_ui()
 	advanced_check.toggled.connect(_on_advanced_settings_toggled)
 	
-	# Set initial visibility based on checkbox state
 	_on_advanced_settings_toggled(advanced_check.button_pressed)
 	
 	if Settings.get_setting("theme_uid") != "":
 		self.theme = load(Settings.get_setting("theme_uid"))
+
+func popup_animated():
+	$Control.modulate = Color.TRANSPARENT
+	size = initial_size * 0.8
+	
+	popup_centered()
+	
+	position -= Vector2i(initial_size * 0.2/2) # By 2 to remember
+	
+	var tween = create_tween().set_parallel().set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+	
+	tween.tween_property(self, "size", initial_size, 0.3)
+	tween.tween_property($Control, "modulate", Color.WHITE, 1.2)
+	
+	if is_instance_valid(overlay_node):
+		var overlay_tween = create_tween()
+		overlay_tween.tween_property(overlay_node, "color", Color(0, 0, 0, 0.5), 0.3)
+
+func close_animated():
+	var tween = create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
+	tween.tween_property(self, "size", Vector2i(initial_size*0.1), 0.2)
+	tween.tween_property($Control, "modulate", Color(0, 0, 0, 0), 0.2)
+	
+	# Animate the background overlay away
+	if is_instance_valid(overlay_node):
+		var overlay_tween = create_tween()
+		overlay_tween.tween_property(overlay_node, "color", Color(0, 0, 0, 0), 0.2)
+		
+	await tween.finished
+	queue_free()
 
 func generate_settings_ui() -> void:
 	# Clear any placeholder children from the editor
@@ -115,6 +148,7 @@ func _create_option_setting(key: String, metadata: Dictionary, current_value: Va
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
 	var option := OptionButton.new()
+	option.name = "OptionButton" # Give it a name to find it later
 	option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
 	var selected_idx := 0
@@ -158,7 +192,6 @@ func _create_file_setting(key: String, metadata: Dictionary, current_value: Vari
 
 func _on_bool_setting_changed(value: bool, key: String) -> void:
 	Settings.set_setting(key, value)
-	# Handle dependencies, e.g., disable tick sound path if tick sound is disabled
 	for setting_key in setting_controls:
 		var meta = Settings.SETTINGS_METADATA[setting_key]
 		if meta.get("depends_on", "") == key:
@@ -172,7 +205,7 @@ func _on_numeric_setting_changed(value: float, key: String) -> void:
 		Settings.set_setting(key, value)
 
 func _on_option_setting_changed(index: int, key: String) -> void:
-	var option_button: OptionButton = setting_controls[key].get_node("OptionButton") # Assumes structure
+	var option_button: OptionButton = setting_controls[key].get_node("OptionButton")
 	var value = option_button.get_item_metadata(index)
 	Settings.set_setting(key, value)
 
@@ -193,15 +226,15 @@ func _on_browse_file_pressed(key: String, metadata: Dictionary, line_edit: LineE
 
 func _on_save_button_pressed() -> void:
 	Settings.save_settings()
-	Settings._apply_settings() # Apply settings like theme, always on top, etc.
-	queue_free()
+	Settings._apply_settings()
+	close_animated()
 
 func _on_cancel_button_pressed() -> void:
-	# Revert any changes by reloading settings from file
 	Settings.load_settings()
 	Settings._apply_settings()
-	queue_free()
+	close_animated()
 
 func _notification(what: int):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		_on_cancel_button_pressed()
+		# Don't revert changes, just close the window
+		close_animated()

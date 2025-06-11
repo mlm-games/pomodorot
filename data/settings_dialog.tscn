@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://caujng1xfp8u3"]
+[gd_scene load_steps=6 format=3 uid="uid://caujng1xfp8u3"]
 
 [ext_resource type="Script" uid="uid://ba32n6yrglwhf" path="res://data/settings_dialog.gd" id="1_8n4p2"]
 [ext_resource type="Theme" uid="uid://ntnplf46rp70" path="res://misc/theme.tres" id="1_ja8r2"]
+[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/anim_buttons/anim_button.gd" id="3_bj60q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ja8r2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bj60q"]
 
 [node name="SettingsDialog" type="Window"]
 title = "Settings"
@@ -9,6 +14,9 @@ initial_position = 2
 size = Vector2i(400, 600)
 exclusive = true
 theme = ExtResource("1_ja8r2")
+theme_override_colors/title_color = Color(0, 0, 0, 0)
+theme_override_styles/embedded_border = SubResource("StyleBoxFlat_ja8r2")
+theme_override_styles/embedded_unfocused_border = SubResource("StyleBoxFlat_bj60q")
 script = ExtResource("1_8n4p2")
 
 [node name="Control" type="Control" parent="."]
@@ -253,12 +261,18 @@ alignment = 1
 [node name="SaveButton" type="Button" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/ButtonContainer"]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
+size_flags_vertical = 4
 text = "Save"
+script = ExtResource("3_bj60q")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="CancelButton" type="Button" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/ButtonContainer"]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
+size_flags_vertical = 4
 text = "Cancel"
+script = ExtResource("3_bj60q")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="item_selected" from="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings/ThemeOptions" to="." method="_on_theme_options_item_selected"]

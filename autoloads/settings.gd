@@ -233,4 +233,3 @@ func clear_theme_and_make_panels_transparent() -> void:
 			child.theme = null
 			if child is Panel:
 				child.self_modulate = Color.TRANSPARENT
-
