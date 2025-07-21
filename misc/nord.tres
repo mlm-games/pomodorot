@@ -55,10 +55,10 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.23, 0.26, 0.32, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
 bg_color = Color(0.23, 0.26, 0.32, 1)
@@ -80,25 +80,23 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_window"]
-content_margin_left = 10.0
-content_margin_top = 28.0
-content_margin_right = 10.0
-content_margin_bottom = 8.0
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
 bg_color = Color(0.18, 0.2, 0.25, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+border_width_left = 2
+border_width_top = 32
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(0.23, 0.26, 0.32, 1)
+border_blend = true
 corner_radius_top_left = 8
 corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-corner_detail = 5
-expand_margin_left = 8.0
-expand_margin_top = 32.0
-expand_margin_right = 8.0
-expand_margin_bottom = 6.0
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0.05, 0.05, 0.1, 0.3)
+shadow_size = 6
 
 [resource]
 Button/colors/font_color = Color(0.85, 0.87, 0.91, 1)
@@ -118,4 +116,7 @@ ProgressBar/colors/font_color = Color(0.95, 0.95, 0.95, 0)
 ProgressBar/styles/background = SubResource("StyleBoxFlat_progress_bg")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_progress_fill")
 Window/colors/title_color = Color(0.85, 0.87, 0.91, 1)
-Window/styles/embedded_border = SubResource("StyleBoxFlat_window")
+Window/constants/close_h_offset = 24
+Window/constants/close_v_offset = 22
+Window/constants/title_height = 28
+Window/styles/panel = SubResource("StyleBoxFlat_window")

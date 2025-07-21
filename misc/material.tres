@@ -6,10 +6,10 @@ content_margin_top = 8.0
 content_margin_right = 12.0
 content_margin_bottom = 8.0
 bg_color = Color(0.2, 0.5, 0.8, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 shadow_color = Color(0, 0, 0, 0.1)
 shadow_size = 1
 
@@ -19,10 +19,10 @@ content_margin_top = 8.0
 content_margin_right = 12.0
 content_margin_bottom = 8.0
 bg_color = Color(0.25, 0.6, 0.85, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 shadow_color = Color(0, 0, 0, 0.1)
 shadow_size = 2
 shadow_offset = Vector2(0, 1)
@@ -33,10 +33,10 @@ content_margin_top = 8.0
 content_margin_right = 12.0
 content_margin_bottom = 8.0
 bg_color = Color(0.15, 0.4, 0.75, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
 bg_color = Color(0.95, 0.95, 0.95, 1)
@@ -50,36 +50,37 @@ shadow_offset = Vector2(0, 2)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
 bg_color = Color(0.9, 0.9, 0.9, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_fill"]
 bg_color = Color(0.2, 0.5, 0.8, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_window"]
-content_margin_left = 10.0
-content_margin_top = 28.0
-content_margin_right = 10.0
-content_margin_bottom = 8.0
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
 bg_color = Color(0.95, 0.95, 0.95, 1)
+border_width_left = 1
+border_width_top = 32
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.88, 0.88, 0.88, 1)
+border_blend = true
 corner_radius_top_left = 10
 corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-corner_detail = 5
-expand_margin_left = 8.0
-expand_margin_top = 32.0
-expand_margin_right = 8.0
-expand_margin_bottom = 6.0
-shadow_color = Color(0, 0, 0, 0.2)
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.15)
 shadow_size = 8
-shadow_offset = Vector2(0, 3)
+shadow_offset = Vector2(0, 2)
 
 [resource]
 Button/colors/font_color = Color(1, 1, 1, 1)
@@ -99,4 +100,7 @@ ProgressBar/colors/font_color = Color(0.95, 0.95, 0.95, 0)
 ProgressBar/styles/background = SubResource("StyleBoxFlat_progress_bg")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_progress_fill")
 Window/colors/title_color = Color(0.2, 0.2, 0.2, 1)
-Window/styles/embedded_border = SubResource("StyleBoxFlat_window")
+Window/constants/close_h_offset = 24
+Window/constants/close_v_offset = 22
+Window/constants/title_height = 28
+Window/styles/panel = SubResource("StyleBoxFlat_window")

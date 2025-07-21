@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=29 format=3 uid="uid://bqm8k7n3x4p2t"]
+[gd_resource type="Theme" load_steps=30 format=3 uid="uid://bqm8k7n3x4p2t"]
 
 [ext_resource type="FontFile" uid="uid://gu3fcbcsumdj" path="res://assets/fonts/Inter/static/Inter_24pt-Regular.ttf" id="1_font"]
 
@@ -376,6 +376,25 @@ border_color = Color(0.3, 0.3, 0.35, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_window_panel"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.06, 0.06, 0.1, 1)
+border_width_left = 2
+border_width_top = 38
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1, 0.1, 0.14, 1)
+border_blend = true
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 8
+
 [resource]
 default_font = ExtResource("1_font")
 default_font_size = 16
@@ -469,6 +488,10 @@ TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_tab_disabled")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_tab_hover")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_tab_selected")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_tab_unselected")
-Window/colors/title_color = Color(0.9, 0.9, 0.9, 1)
+Window/colors/title_color = Color(0.95, 0.95, 0.98, 1)
+Window/constants/close_h_offset = 24
+Window/constants/close_v_offset = 24
+Window/constants/title_height = 34
 Window/font_sizes/title_size = 18
 Window/fonts/title_font = ExtResource("1_font")
+Window/styles/panel = SubResource("StyleBoxFlat_window_panel")
