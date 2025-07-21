@@ -26,12 +26,12 @@ func popup_animated():
 	
 	popup_centered()
 	
-	position -= Vector2i(initial_size * 0.2/2) # By 2 to remember
+	position -= Vector2i(initial_size * 0.2 / 2) # By 2 to remember
 	
 	var tween = create_tween().set_parallel().set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 	
 	tween.tween_property(self, "size", initial_size, 0.3)
-	tween.tween_property($Control, "modulate", Color.WHITE, 1.2)
+	tween.tween_property($Control, "modulate", Color.WHITE, 0.5).set_trans(Tween.TRANS_CUBIC)
 	
 	if is_instance_valid(overlay_node):
 		var overlay_tween = create_tween()
@@ -40,8 +40,8 @@ func popup_animated():
 func close_animated():
 	var tween = create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	
-	tween.tween_property(self, "size", Vector2i(initial_size*0.1), 0.2)
-	tween.tween_property($Control, "modulate", Color(0, 0, 0, 0), 0.2)
+	tween.tween_property(self, "size", Vector2i(initial_size * 0.1), 0.2)
+	tween.tween_property($Control, "modulate", Color(0, 0, 0, 0), 0.2).set_trans(Tween.TRANS_CUBIC)
 	
 	# Animate the background overlay away
 	if is_instance_valid(overlay_node):
@@ -60,7 +60,7 @@ func generate_settings_ui() -> void:
 	var current_os = OS.get_name().to_lower()
 
 	for key in Settings.SETTINGS_METADATA:
-		var metadata := Settings.SETTINGS_METADATA[key]
+		var metadata: Variant = Settings.SETTINGS_METADATA[key]
 		
 		# Skip hidden settings
 		if metadata.get("hidden", false):
@@ -96,7 +96,7 @@ func _get_container_for_section(section: String) -> VBoxContainer:
 func _create_control_for_setting(key: String, metadata: Dictionary) -> Control:
 	var current_value = Settings.get_setting(key)
 	
-	var control : Control
+	var control: Control
 	match metadata.type:
 		"bool":
 			control = _create_bool_setting(key, metadata, current_value)
