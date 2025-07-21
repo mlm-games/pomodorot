@@ -145,6 +145,11 @@ func _advance_timer_type() -> void:
 				current_timer_type = TimerType.SHORT_BREAK
 		TimerType.SHORT_BREAK, TimerType.LONG_BREAK:
 			current_timer_type = TimerType.WORK
+		
+func reset_cycle_count() -> void:
+	if not is_running:
+		cycle_count = 0
+		current_timer_type = TimerType.WORK
 
 func _increment_pomodoro_count() -> void:
 	if current_timer_type == TimerType.WORK:

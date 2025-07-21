@@ -114,6 +114,12 @@ text = "Skip"
 script = ExtResource("2_s0khs")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
+[node name="ResetButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+text = "Reset"
+
 [node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
@@ -132,4 +138,5 @@ metadata/_custom_type_script = "uid://cmo5qw3rubish"
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/StartPauseButton" to="." method="_on_start_pause_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/StopButton" to="." method="_on_stop_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/SkipButton" to="." method="_on_skip_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/BottomButtonContainer/SettingsButton" to="." method="_on_settings_button_pressed"]

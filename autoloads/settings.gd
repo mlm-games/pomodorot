@@ -91,6 +91,14 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"type": "int", "default": 0, "section": "general", "hidden": true,
 		"label": "Pomodoro Count", "description": "Number of completed pomodoro sessions"
 	},
+	"window_position": {
+		"type": "vector2i", "default": Vector2i(-1, -1), "section": "internal", "hidden": true,
+		"label": "Window Position", "description": "Last saved window position. (-1, -1) means centered."
+	},
+	"window_size": {
+		"type": "vector2i", "default": Vector2i(-1, -1), "section": "internal", "hidden": true,
+		"label": "Window Size", "description": "Last saved window size. (-1, -1) means default."
+ 	},
 	
 	# Sound settings
 	"sound_enabled": {
@@ -190,6 +198,18 @@ func _apply_settings() -> void:
 	var on_top_supported = OS.has_feature("windows") or OS.has_feature("macos") or OS.has_feature("linux")
 	if on_top_supported:
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, values.always_on_top)
+
+	if OS.has_feature("pc"): 
+		if values.window_size != Vector2i(-1, -1):
+			DisplayServer.window_set_size(values.window_size)
+		if values.window_position != Vector2i(-1, -1):
+			DisplayServer.window_set_position(values.window_position)
+		else:
+			# Center window on first launch
+			var screen_size = DisplayServer.screen_get_size()
+			var window_size = DisplayServer.window_get_size()
+			DisplayServer.window_set_position(screen_size / 2 - window_size / 2)
+
 	
 	get_tree().root.set_content_scale_factor(values.content_size_scale)
 	change_theme(values.theme_uid)
@@ -200,6 +220,12 @@ func get_setting(key: String):
 func set_setting(key: String, value):
 	values[key] = value
 	setting_changed.emit(key, value)
+
+func save_window_state():
+	if OS.has_feature("pc"):
+		set_setting("window_position", DisplayServer.window_get_position())
+		set_setting("window_size", DisplayServer.window_get_size())
+		save_settings()
 
 func change_theme(new_theme_uid: StringName) -> void:
 	var ui_root := get_tree().root
