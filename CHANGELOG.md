@@ -1,3 +1,8 @@
+## v0.11.2
+
+- Update export_releases.yml to add fetch depth by @ragebreaker
+
+
 ## v0.11.1
 
 - Improve all themes somewhat by @mlm-games
