@@ -1,3 +1,8 @@
+## v0.11.1
+
+- Improve all themes somewhat by @mlm-games
+
+
 ## v0.11.0
 
 - Add proper settings organisation, fix timer settings not applying, show asetting only if applicable for the current OS by @mlm-studios
