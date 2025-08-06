@@ -1,0 +1,4 @@
+- temporary solution for invisible audio files on export
+- fix settings nested under containers
+- only save window size when not maximised
+- Add an autosave setting

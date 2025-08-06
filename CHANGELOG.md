@@ -1,3 +1,11 @@
+## v0.11.3
+
+- temporary solution for invisible audio files on export
+- fix settings nested under containers
+- only save window size when not maximised
+- Add an autosave setting
+
+
 ## v0.11.2
 
 - Update export_releases.yml to add fetch depth by @ragebreaker

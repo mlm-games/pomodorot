@@ -52,6 +52,16 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="0.11.3" date="2025-08-06">
+      <description>
+        <ul>
+          <li>temporary solution for invisible audio files on export</li>
+          <li>fix settings nested under containers</li>
+          <li>only save window size when not maximised</li>
+          <li>Add an autosave setting</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.11.2" date="2025-07-23">
       <description>
         <ul>
