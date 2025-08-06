@@ -1,6 +1,15 @@
 extends Node
 
+
+const DEFAULT_WORK_FINISH_SOUND = preload("res://assets/sfx/work_done.ogg")
+const DEFAULT_BREAK_FINISH_SOUND = preload("res://assets/sfx/work_done.ogg")
+const DEFAULT_TICK_SOUND = preload("res://assets/sfx/tick-tock.ogg")
+
 var audio_player: AudioStreamPlayer
+var work_finish_sound: AudioStream = DEFAULT_WORK_FINISH_SOUND
+var break_finish_sound: AudioStream = DEFAULT_BREAK_FINISH_SOUND
+var tick_sound: AudioStream = DEFAULT_TICK_SOUND
+
 
 func _ready() -> void:
 	TimerManager.timer_finished.connect(_on_timer_finished)
@@ -18,18 +27,16 @@ func _load_sounds() -> void:
 	var break_finish_path : StringName = Settings.get_setting("break_finish_sound_path")
 	var tick_path : StringName = Settings.get_setting("tick_sound_path")
 	
-	if work_finish_path and ResourceLoader.exists(work_finish_path):
+	# Only load custom sounds if they differ from defaults
+	if work_finish_path and work_finish_path != "res://assets/sfx/work_done.ogg" and ResourceLoader.exists(work_finish_path):
 		work_finish_sound = load(work_finish_path)
 	
-	if break_finish_path and ResourceLoader.exists(break_finish_path):
+	if break_finish_path and break_finish_path != "res://assets/sfx/work_done.ogg" and ResourceLoader.exists(break_finish_path):
 		break_finish_sound = load(break_finish_path)
 	
-	if tick_path and ResourceLoader.exists(tick_path):
+	if tick_path and tick_path != "res://assets/sfx/tick-tock.ogg" and ResourceLoader.exists(tick_path):
 		tick_sound = load(tick_path)
 
-var work_finish_sound: AudioStream
-var break_finish_sound: AudioStream
-var tick_sound: AudioStream
 
 func _on_setting_changed(key: String, value: Variant) -> void:
 	match key:
