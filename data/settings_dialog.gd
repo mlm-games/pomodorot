@@ -195,7 +195,14 @@ func _on_bool_setting_changed(value: bool, key: String) -> void:
 	for setting_key in setting_controls:
 		var meta = Settings.SETTINGS_METADATA[setting_key]
 		if meta.get("depends_on", "") == key:
-			setting_controls[setting_key].disabled = not value
+			var control = setting_controls[setting_key]
+			# Handle different control types
+			if control is HBoxContainer:
+				for child in control.get_children():
+					if child is Button:
+						child.disabled = not value
+			else:
+				control.disabled = not value
 
 func _on_numeric_setting_changed(value: float, key: String) -> void:
 	var metadata = Settings.SETTINGS_METADATA[key]
