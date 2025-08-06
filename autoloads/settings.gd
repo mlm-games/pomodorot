@@ -151,7 +151,12 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"type": "int", "default": 4, "section": "timer",
 		"label": "Long Break After (cycles)", "description": "Number of work sessions before a long break",
 		"min": 1, "max": 10, "step": 1
-	}
+	},
+	autosave_enabled = {
+	"type": "bool", "default": true, "section": "general",
+	"label": "Autosave Settings",
+	"description": "Automatically save settings when changed"
+	},
 }
 
 
@@ -220,6 +225,10 @@ func get_setting(key: String):
 func set_setting(key: String, value):
 	values[key] = value
 	setting_changed.emit(key, value)
+	
+	# Autosave if enabled (but don't autosave the autosave setting)
+	if values.get("autosave_enabled", true) and key != "autosave_enabled":
+		save_settings()
 
 func save_window_state():
 	if OS.has_feature("pc"):
