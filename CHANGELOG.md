@@ -1,3 +1,8 @@
+## v0.12.1
+
+- Update to 4.5 and improve tick sound
+
+
 ## v0.11.3
 
 - temporary solution for invisible audio files on export
