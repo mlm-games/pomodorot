@@ -76,76 +76,8 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="AlwaysOnTopCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
+[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 layout_mode = 2
-text = "Always On Top"
-
-[node name="AutoStartWorkCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Auto-start Work Timer"
-
-[node name="AutoStartBreakCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Auto-start Break Timer"
-
-[node name="DesktopNotificationsCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Desktop Notifications"
-
-[node name="MinimizeToTrayCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Minimize to Tray"
-
-[node name="MinimizeOnCloseCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Minimize to Tray on Close"
-
-[node name="CoverScreenDuringBreaksCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Cover Screen During Breaks"
-
-[node name="UncoverWhenSkippedCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Allow Uncovering When Skipped"
-
-[node name="ThemeOptions" type="OptionButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings/HBoxContainer"]
-layout_mode = 2
-text = "Screen Content Scale: "
-
-[node name="ContentScaleSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-min_value = 0.1
-max_value = 10.0
-step = 0.05
-value = 1.0
-allow_greater = true
-allow_lesser = true
 
 [node name="HSeparator" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -159,21 +91,8 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SoundEnabledCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/SoundSettings"]
-unique_name_in_owner = true
+[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/SoundSettings"]
 layout_mode = 2
-text = "Sound Enabled"
-
-[node name="TickSoundCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/SoundSettings"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Tick Sound"
-
-[node name="TickLast10SecsCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/SoundSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Play Tick Sound For Last 10 Seconds"
 
 [node name="HSeparator2" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -187,61 +106,8 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
-visible = false
+[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
 layout_mode = 2
-text = "Work Duration (minutes):"
-
-[node name="WorkDurationSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-min_value = 1.0
-max_value = 120.0
-value = 25.0
-rounded = true
-
-[node name="Label2" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
-visible = false
-layout_mode = 2
-text = "Short Break (minutes):"
-
-[node name="ShortBreakSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-min_value = 1.0
-max_value = 30.0
-value = 5.0
-rounded = true
-
-[node name="Label3" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
-visible = false
-layout_mode = 2
-text = "Long Break (minutes):"
-
-[node name="LongBreakSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-min_value = 1.0
-max_value = 60.0
-value = 15.0
-rounded = true
-
-[node name="Label4" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
-visible = false
-layout_mode = 2
-text = "Long Break After (cycles):"
-
-[node name="LongBreakIntervalSpin" type="SpinBox" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-min_value = 1.0
-max_value = 10.0
-value = 4.0
-rounded = true
 
 [node name="HSeparator3" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -276,6 +142,5 @@ script = ExtResource("3_bj60q")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
-[connection signal="item_selected" from="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings/ThemeOptions" to="." method="_on_theme_options_item_selected"]
 [connection signal="pressed" from="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/ButtonContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/ButtonContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
