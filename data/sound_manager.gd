@@ -3,7 +3,7 @@ extends Node
 
 const DEFAULT_WORK_FINISH_SOUND = preload("res://assets/sfx/work_done.ogg")
 const DEFAULT_BREAK_FINISH_SOUND = preload("res://assets/sfx/work_done.ogg")
-const DEFAULT_TICK_SOUND = preload("res://assets/sfx/tick-tock.ogg")
+const DEFAULT_TICK_SOUND = preload("res://assets/sfx/tick-tock.wav")
 
 var audio_player: AudioStreamPlayer
 var work_finish_sound: AudioStream = DEFAULT_WORK_FINISH_SOUND

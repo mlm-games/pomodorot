@@ -9,6 +9,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bj60q"]
 
 [node name="SettingsDialog" type="Window"]
+oversampling_override = 1.0
 title = "Settings"
 initial_position = 2
 size = Vector2i(400, 600)
