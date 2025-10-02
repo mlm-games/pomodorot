@@ -149,14 +149,15 @@ func _create_option_setting(key: String, metadata: Dictionary, current_value: Va
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	var option := OptionButton.new()
-	option.name = "OptionButton" # Give it a name to find it later
+	option.name = "OptionButton"
 	option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 	var selected_idx := 0
 	var idx := 0
-	for option_key in metadata.options:
-		var option_value = metadata.options[option_key]
-		option.add_item(option_key.capitalize())
+	for option_key:String in metadata.options:
+		var option_value : Variant = metadata.options[option_key]
+		var display := option_key.capitalize()
+		option.add_item(display)
 		option.set_item_metadata(idx, option_value)
 		if option_value == current_value:
 			selected_idx = idx

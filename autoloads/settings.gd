@@ -41,6 +41,11 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"label": "Cover Screen During Breaks",
 		"description": "Maximizes the application during breaks to encourage taking a break"
 	},
+	autosave_enabled = {
+	"type": "bool", "default": true, "section": "general",
+	"label": "Autosave Settings",
+	"description": "Automatically save settings when changed"
+	},
 	theme_uid = {
 		"type": "option", "default": "", "section": "general", "label": "Theme",
 		"description": "Visual appearance of the app",
@@ -151,11 +156,6 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"type": "int", "default": 4, "section": "timer",
 		"label": "Long Break After (cycles)", "description": "Number of work sessions before a long break",
 		"min": 1, "max": 10, "step": 1
-	},
-	autosave_enabled = {
-	"type": "bool", "default": true, "section": "general",
-	"label": "Autosave Settings",
-	"description": "Automatically save settings when changed"
 	},
 }
 
