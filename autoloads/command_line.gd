@@ -10,7 +10,8 @@ func _ready() -> void:
 			"--start-timer":
 				start_timer_requested.emit.call_deferred()
 			"--silent":
-				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+				if OS.has_feature("windows") or OS.has_feature("linux") or OS.has_feature("macos"):
+					DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
 			"--no-popups-and-sound":
 				no_popups_and_sound_requested.emit.call_deferred(true)
 	#Test stuff

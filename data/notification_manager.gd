@@ -6,11 +6,11 @@ const NOTIFICATIONS = {
 		"body": "Time for a break! Look at something 20ft away or walk away"
 	},
 	TimerManager.TimerType.SHORT_BREAK: {
-		"title": "Short Break Finished", 
+		"title": "Short Break Finished",
 		"body": "Back to work!"
 	},
 	TimerManager.TimerType.LONG_BREAK: {
-		"title": "Long Break Finished", 
+		"title": "Long Break Finished",
 		"body": "Back to work!"
 	}
 }
@@ -21,11 +21,12 @@ func _ready() -> void:
 func _on_timer_finished(timer_type: TimerManager.TimerType) -> void:
 	if Settings.get_setting("desktop_notifications") and not TimerManager.no_popups_and_sound:
 		if timer_type in NOTIFICATIONS:
-			var notif : Dictionary = NOTIFICATIONS[timer_type]
-			show_notification_and_grab_focus(notif.title, notif.body)
+			var notif: Dictionary = NOTIFICATIONS[timer_type]
+			show_notification_and_grab_focus(notif["title"], notif["body"])
 
 func show_notification_and_grab_focus(title: String, content: String) -> void:
 	DisplayServer.window_request_attention()
 	if OS.get_name() != "Web":
-		OS.alert.call_deferred(content, title) # Calling deferred for having the audio play before the alert is shown
+		# Call deferred so audio plays before the alert is shown.
+		OS.alert.call_deferred(content, title)
 	get_tree().get_root().grab_focus()

@@ -14,40 +14,41 @@ var setting_controls := {}
 func _ready() -> void:
 	generate_settings_ui()
 	advanced_check.toggled.connect(_on_advanced_settings_toggled)
-	
+
 	_on_advanced_settings_toggled(advanced_check.button_pressed)
-	
+
 	if Settings.get_setting("theme_uid") != "":
 		self.theme = load(Settings.get_setting("theme_uid"))
 
-func popup_animated():
+func popup_animated() -> void:
 	$Control.modulate = Color.TRANSPARENT
 	size = initial_size * 0.8
-	
+
 	popup_centered()
-	
+
 	position -= Vector2i(initial_size * 0.2 / 2) # By 2 to remember
-	
+
 	var tween = create_tween().set_parallel().set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
-	
+
 	tween.tween_property(self, "size", initial_size, 0.3)
 	tween.tween_property($Control, "modulate", Color.WHITE, 0.5).set_trans(Tween.TRANS_CUBIC)
-	
+
 	if is_instance_valid(overlay_node):
+		overlay_node.color = Color(0, 0, 0, 0.0)
 		var overlay_tween = create_tween()
 		overlay_tween.tween_property(overlay_node, "color", Color(0, 0, 0, 0.5), 0.3)
 
-func close_animated():
+func close_animated() -> void:
 	var tween = create_tween().set_parallel().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	
+
 	tween.tween_property(self, "size", Vector2i(initial_size * 0.1), 0.2)
 	tween.tween_property($Control, "modulate", Color(0, 0, 0, 0), 0.2).set_trans(Tween.TRANS_CUBIC)
-	
+
 	# Animate the background overlay away
 	if is_instance_valid(overlay_node):
 		var overlay_tween = create_tween()
-		overlay_tween.tween_property(overlay_node, "color", Color(0, 0, 0, 0), 0.2)
-		
+		overlay_tween.tween_property(overlay_node, "color", Color(0, 0, 0, 0.0), 0.2)
+
 	await tween.finished
 	queue_free()
 
@@ -56,25 +57,25 @@ func generate_settings_ui() -> void:
 	for container in [general_container, sound_container, timer_container]:
 		for child in container.get_children():
 			child.queue_free()
-	
+
 	var current_os = OS.get_name().to_lower()
 
 	for key in Settings.SETTINGS_METADATA:
 		var metadata: Variant = Settings.SETTINGS_METADATA[key]
-		
+
 		# Skip hidden settings
 		if metadata.get("hidden", false):
 			continue
-			
+
 		# Skip platform-specific settings not for this platform
 		if "platforms" in metadata:
 			if not current_os in metadata.platforms:
 				continue
-		
+
 		var container := _get_container_for_section(metadata.section)
 		if not container:
 			continue
-		
+
 		var control := _create_control_for_setting(key, metadata)
 		if control:
 			container.add_child(control)
@@ -95,7 +96,7 @@ func _get_container_for_section(section: String) -> VBoxContainer:
 
 func _create_control_for_setting(key: String, metadata: Dictionary) -> Control:
 	var current_value = Settings.get_setting(key)
-	
+
 	var control: Control
 	match metadata.type:
 		"bool":
@@ -106,10 +107,10 @@ func _create_control_for_setting(key: String, metadata: Dictionary) -> Control:
 			control = _create_option_setting(key, metadata, current_value)
 		"file":
 			control = _create_file_setting(key, metadata, current_value)
-	
+
 	if control and metadata.get("advanced", false):
 		control.visible = false
-	
+
 	return control
 
 func _create_bool_setting(key: String, metadata: Dictionary, current_value: Variant) -> Control:
@@ -126,16 +127,16 @@ func _create_numeric_setting(key: String, metadata: Dictionary, current_value: V
 	label.text = metadata.label + ":"
 	label.tooltip_text = metadata.get("description", "")
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
+
 	var spin := SpinBox.new()
 	spin.min_value = metadata.get("min", 0.0)
 	spin.max_value = metadata.get("max", 100.0)
 	spin.step = metadata.get("step", 1.0)
 	spin.value = current_value
 	spin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
+
 	spin.value_changed.connect(_on_numeric_setting_changed.bind(key))
-	
+
 	container.add_child(label)
 	container.add_child(spin)
 	return container
@@ -146,11 +147,11 @@ func _create_option_setting(key: String, metadata: Dictionary, current_value: Va
 	label.text = metadata.label + ":"
 	label.tooltip_text = metadata.get("description", "")
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
+
 	var option := OptionButton.new()
 	option.name = "OptionButton" # Give it a name to find it later
 	option.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
+
 	var selected_idx := 0
 	var idx := 0
 	for option_key in metadata.options:
@@ -161,9 +162,9 @@ func _create_option_setting(key: String, metadata: Dictionary, current_value: Va
 			selected_idx = idx
 		idx += 1
 	option.select(selected_idx)
-	
+
 	option.item_selected.connect(_on_option_setting_changed.bind(key))
-	
+
 	container.add_child(label)
 	container.add_child(option)
 	return container
@@ -174,17 +175,17 @@ func _create_file_setting(key: String, metadata: Dictionary, current_value: Vari
 	label.text = metadata.label + ":"
 	label.tooltip_text = metadata.get("description", "")
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
+
 	var line_edit := LineEdit.new()
-	line_edit.text = current_value
+	line_edit.text = str(current_value)
 	line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	
+
 	var browse_button := Button.new()
 	browse_button.text = "..."
 	browse_button.pressed.connect(_on_browse_file_pressed.bind(key, metadata, line_edit))
-	
+
 	line_edit.text_changed.connect(Settings.set_setting.bind(key))
-	
+
 	container.add_child(label)
 	container.add_child(line_edit)
 	container.add_child(browse_button)
@@ -192,17 +193,26 @@ func _create_file_setting(key: String, metadata: Dictionary, current_value: Vari
 
 func _on_bool_setting_changed(value: bool, key: String) -> void:
 	Settings.set_setting(key, value)
+	# Handle any controls that depend on this setting
 	for setting_key in setting_controls:
 		var meta = Settings.SETTINGS_METADATA[setting_key]
 		if meta.get("depends_on", "") == key:
-			var control = setting_controls[setting_key]
-			# Handle different control types
+			var control: Control = setting_controls[setting_key]
+			# If it's a container (e.g., label + input), toggle interactive children.
 			if control is HBoxContainer:
 				for child in control.get_children():
-					if child is Button:
+					if child is BaseButton:
+						child.disabled = not value
+					elif child is SpinBox:
+						child.editable = value
+					elif child is LineEdit:
+						child.editable = value
+					elif child is OptionButton:
 						child.disabled = not value
 			else:
-				control.disabled = not value
+				# Likely a CheckButton (BaseButton) or similar.
+				if control is BaseButton:
+					control.disabled = not value
 
 func _on_numeric_setting_changed(value: float, key: String) -> void:
 	var metadata = Settings.SETTINGS_METADATA[key]
@@ -222,12 +232,12 @@ func _on_browse_file_pressed(key: String, metadata: Dictionary, line_edit: LineE
 	file_dialog.access = FileDialog.ACCESS_RESOURCES
 	if "file_filter" in metadata:
 		file_dialog.filters = metadata.file_filter.split(";")
-	
+
 	file_dialog.file_selected.connect(func(path: String):
 		line_edit.text = path
 		Settings.set_setting(key, path)
 	)
-	
+
 	add_child(file_dialog)
 	file_dialog.popup_centered()
 
@@ -240,6 +250,13 @@ func _on_cancel_button_pressed() -> void:
 	Settings.load_settings()
 	Settings._apply_settings()
 	close_animated()
+
+func _on_close_requested() -> void:
+	close_animated()
+
+# TODO?: for ThemeOptions signal (autoconnect from scene while loading/adding?)
+func _on_theme_options_item_selected(_index: int) -> void:
+	pass
 
 func _notification(what: int):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

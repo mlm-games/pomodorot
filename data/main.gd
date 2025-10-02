@@ -11,27 +11,23 @@ extends Control
 @onready var counter_label: Label = %CounterLabel
 
 var notification_manager: Node
-var sound_manager: Node
 
 func _ready() -> void:
-	#HACK: Settings are now loaded and applied automatically by the Settings singleton.
-	
+	# HACK: Settings are now loaded and applied automatically by the Settings singleton.
+
 	notification_manager = preload("uid://dfsq5txsl3uwg").new()
 	add_child(notification_manager)
-	
-	sound_manager = preload("uid://5nkdkcf1v2o5").new()
-	add_child(sound_manager)
-	
+
 	TimerManager.timer_updated.connect(_on_timer_updated)
 	TimerManager.timer_started.connect(_on_timer_started)
 	TimerManager.timer_finished.connect(_on_timer_finished)
 	TimerManager.timer_paused.connect(_on_timer_paused)
 	TimerManager.timer_resumed.connect(_on_timer_resumed)
 	TimerManager.timer_stopped.connect(_on_timer_stopped)
-	
+
 	# Connect to setting changes to update UI elements that depend on them.
 	Settings.setting_changed.connect(_on_setting_changed)
-	
+
 	_update_ui(0, 0)
 	_set_timer_inactive_state()
 	_update_counter_visibility()
@@ -83,7 +79,7 @@ func _on_timer_started(timer_type: TimerManager.TimerType) -> void:
 		TimerManager.TimerType.LONG_BREAK:
 			status_label.text = "Long Break"
 			progress_bar.self_modulate = break_color
-	
+
 	start_pause_button.text = "Pause"
 	stop_button.disabled = false
 	skip_button.disabled = false
@@ -105,23 +101,23 @@ func _on_timer_stopped() -> void:
 func _update_ui(time_left: int, total_time: int) -> void:
 	if Settings.get_setting("show_percentage_instead_of_time"):
 		if total_time > 0:
-			var percentage = ((total_time - time_left) / float(total_time)) * 100
+			var percentage = ((total_time - time_left) / float(total_time)) * 100.0
 			time_label.text = "%.0f%%" % percentage
 		else:
 			time_label.text = "0%"
 	else:
 		var minutes := int(time_left / 60)
 		var seconds := int(time_left % 60)
-		
+
 		if Settings.get_setting("hide_seconds_display"):
 			time_label.text = "%d min" % int(ceil(time_left / 60.0))
 		else:
 			time_label.text = "%02d:%02d" % [minutes, seconds]
-	
+
 	if total_time > 0:
-		progress_bar.value = ((total_time - time_left) / float(total_time)) * 100
+		progress_bar.value = ((total_time - time_left) / float(total_time)) * 100.0
 	else:
-		progress_bar.value = 100
+		progress_bar.value = 100.0
 
 func _update_counter_visibility() -> void:
 	# Update counter display
@@ -161,25 +157,26 @@ func _on_reset_button_pressed() -> void:
 func _on_settings_button_pressed() -> void:
 	var settings_dialog := preload("res://data/settings_dialog.tscn").instantiate()
 	add_child(settings_dialog)
+	if settings_dialog.has_meta("overlay_node"):
+		settings_dialog.overlay_node = %ModalOverlay
 	settings_dialog.popup_animated()
 
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_WM_CLOSE_REQUEST:
 			Settings.save_window_state() # Save window state on close
-			
+
 			if Settings.get_setting("prevent_alt_f4_close"):
-				get_tree().auto_accept_quit = false # Prevents Alt+F4 from working
+				get_tree().auto_accept_quit = false
 				return
 
 			var minimize_on_close = Settings.get_setting("minimize_to_tray_on_close")
 			var tray_supported = OS.has_feature("windows") or OS.has_feature("linux") or OS.has_feature("macos")
-			
+
 			if minimize_on_close and tray_supported:
-				get_window().hide() # Hide the window instead of quitting
+				get_window().hide()
 			else:
 				get_tree().quit()
 
 		NOTIFICATION_WM_GO_BACK_REQUEST:
-			# Standard behavior: quit the app on back press.
 			get_tree().quit()

@@ -124,7 +124,7 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"file_filter": "*.ogg,*.wav"
 	},
 	tick_sound_path = {
-		"type": "file", "default": "res://assets/sfx/tick-tock.ogg", "section": "sound", "advanced": true,
+		"type": "file", "default": "res://assets/sfx/tick-tock.wav", "section": "sound", "advanced": true,
 		"label": "Tick Sound File",
 		"description": "Sound file for the ticking sound",
 		"file_filter": "*.ogg,*.wav",
@@ -179,50 +179,44 @@ func _ready() -> void:
 
 func save_settings() -> void:
 	var config = ConfigFile.new()
-	
 	for key in values:
 		var metadata = SETTINGS_METADATA[key]
 		config.set_value(metadata.section, key, values[key])
-	
 	config.save(SETTINGS_PATH)
 
 func load_settings() -> void:
 	var config = ConfigFile.new()
 	var error = config.load(SETTINGS_PATH)
-	
 	if error != OK:
 		save_settings() # Save defaults on first run
 		return
-	
 	for key in SETTINGS_METADATA:
 		var metadata = SETTINGS_METADATA[key]
 		values[key] = config.get_value(metadata.section, key, metadata.default)
-		
+
 func _apply_settings() -> void:
-	# Apply immediate effects
 	var on_top_supported = OS.has_feature("windows") or OS.has_feature("macos") or OS.has_feature("linux")
 	if on_top_supported:
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, values.always_on_top)
 
-	if OS.has_feature("pc"): 
+	if OS.has_feature("pc"):
 		var current_mode = DisplayServer.window_get_mode()
-		if current_mode != DisplayServer.WINDOW_MODE_MAXIMIZED and current_mode != DisplayServer.WINDOW_MODE_FULLSCREEN: # Only restore window size/position if not maximized
+		if current_mode != DisplayServer.WINDOW_MODE_MAXIMIZED and current_mode != DisplayServer.WINDOW_MODE_FULLSCREEN:
 			if values.window_size != Vector2i(-1, -1):
 				DisplayServer.window_set_size(values.window_size)
 			if values.window_position != Vector2i(-1, -1):
 				DisplayServer.window_set_position(values.window_position)
 			else:
-				# Centers on first launch
 				var screen_size = DisplayServer.screen_get_size()
 				var window_size = DisplayServer.window_get_size()
 				DisplayServer.window_set_position(screen_size / 2 - window_size / 2)
-	
+
 	get_tree().root.set_content_scale_factor(values.content_scale_factor)
 	change_theme(values.theme_uid)
-	
+
 func get_setting(key: String):
 	return values[key]
-	
+
 func set_setting(key: String, value):
 	values[key] = value
 	setting_changed.emit(key, value)
@@ -239,6 +233,7 @@ func save_window_state():
 			set_setting("window_position", DisplayServer.window_get_position())
 			set_setting("window_size", DisplayServer.window_get_size())
 			save_settings()
+	
 
 func change_theme(new_theme_uid: StringName) -> void:
 	var ui_root := get_tree().root
