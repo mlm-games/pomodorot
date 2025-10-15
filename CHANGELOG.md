@@ -1,3 +1,12 @@
+## v0.12.2
+
+- hide tray options on linux (godot doesn't support yet, use rbtray)
+- Update test-aur-upload.yml
+- improve theme option names
+- cleanup settings dialog
+- autofmt spacing, handle LineEdit better, fix audio set buttons and other misc changes
+
+
 ## v0.12.1
 
 - Update to 4.5 and improve tick sound

@@ -52,6 +52,17 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="0.12.2" date="2025-10-15">
+      <description>
+        <ul>
+          <li>hide tray options on linux (godot doesn't support yet, use rbtray)</li>
+          <li>Update test-aur-upload.yml</li>
+          <li>improve theme option names</li>
+          <li>cleanup settings dialog</li>
+          <li>autofmt spacing, handle LineEdit better, fix audio set buttons and other misc changes</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.12.1" date="2025-10-02">
       <description>
         <ul>

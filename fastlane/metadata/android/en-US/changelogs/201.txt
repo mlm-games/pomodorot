@@ -1,0 +1,5 @@
+- hide tray options on linux (godot doesn't support yet, use rbtray)
+- Update test-aur-upload.yml
+- improve theme option names
+- cleanup settings dialog
+- autofmt spacing, handle LineEdit better, fix audio set buttons and other misc changes
