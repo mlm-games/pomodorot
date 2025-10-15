@@ -28,13 +28,13 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"type": "bool", "default": true, "section": "general", 
 		"label": "Minimize to Tray",
 		"description": "Allows minimizing to system tray",
-		"platforms": ["windows", "linux", "macos"]
+		"platforms": ["windows", "macos"]
 	},
 	minimize_to_tray_on_close = {
 		"type": "bool", "default": true, "section": "general", 
 		"label": "Minimize to Tray on Close",
 		"description": "Minimizes to tray instead of closing when the close button is clicked",
-		"platforms": ["windows", "linux", "macos"]
+		"platforms": ["windows", "macos"]
 	},
 	cover_screen_during_breaks = {
 		"type": "bool", "default": true, "section": "general", 
