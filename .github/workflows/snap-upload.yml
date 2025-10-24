@@ -32,8 +32,13 @@ jobs:
       - name: Fetch Linux binary (with fallback)
         run: |
           mkdir -p snap/builds
+          
+          mkdir -p snap/gui
+          cp others/flathub/io.github.mlm_games.pomodorot.desktop snap/gui/pomodorot.desktop
+          cp icon.png snap/gui/icon.png
+
           set -e
-          echo "Fetch 'imagot.x86_64'..."
+          echo "Fetch 'pomodorot.x86_64'..."
           curl -fL "https://github.com/${{ github.repository }}/releases/download/${{ inputs.version_name }}/pomodorot.x86_64" -o snap/builds/pomodorot
           chmod +x snap/builds/pomodorot
 
