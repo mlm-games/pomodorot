@@ -1,6 +1,6 @@
 name: pomodorot
 base: core22
-version: '0.12.1'
+version: '0.12.2'
 summary: Pomodorot timer with cmdline options support
 description: |
   Pomodoro timer with various timer modes, supports commandline options to autostart timer, etc.
@@ -42,9 +42,9 @@ parts:
       - libpulse0
     override-build: |
       craftctl default
-      install -Dm644 "$CRAFT_PROJECT_DIR/../others/flathub/io.github.mlm_games.pomodorot.desktop" "$CRAFT_PART_INSTALL/pomodorot.desktop"
+      install -Dm755 "$CRAFT_PART_SRC/pomodorot" "$CRAFT_PART_INSTALL/pomodorot"
       chmod +x "$CRAFT_PART_INSTALL/pomodorot"
 
 layout:
-  /usr/share/imagot:
+  /usr/share/pomodorot:
     bind: $SNAP/usr/share/pomodorot
