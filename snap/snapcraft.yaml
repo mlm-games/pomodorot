@@ -43,6 +43,7 @@ parts:
     override-build: |
       craftctl default
       install -Dm755 "$CRAFT_PART_SRC/pomodorot" "$CRAFT_PART_INSTALL/pomodorot"
+      install -Dm644 "$CRAFT_PROJECT_DIR/gui/pomodorot.desktop" "$CRAFT_PART_INSTALL/pomodorot.desktop"
       chmod +x "$CRAFT_PART_INSTALL/pomodorot"
 
 layout:
