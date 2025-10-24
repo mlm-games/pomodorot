@@ -42,7 +42,7 @@ parts:
       - libpulse0
     override-build: |
       craftctl default
-      install -Dm644 "$CRAFT_PROJECT_DIR/gui/pomodorot.desktop" "$CRAFT_PART_INSTALL/pomodorot.desktop"
+      install -Dm644 "$CRAFT_PROJECT_DIR/../others/flathub/io.github.mlm_games.pomodorot.desktop" "$CRAFT_PART_INSTALL/pomodorot.desktop"
       chmod +x "$CRAFT_PART_INSTALL/pomodorot"
 
 layout:
