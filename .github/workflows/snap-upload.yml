@@ -42,11 +42,6 @@ jobs:
           curl -fL "https://github.com/${{ github.repository }}/releases/download/${{ inputs.version_name }}/pomodorot.x86_64" -o snap/builds/pomodorot
           chmod +x snap/builds/pomodorot
 
-      - name: Prepare snap assets
-        run: |
-          mkdir -p snap/gui
-          cp icon.png snap/gui/icon.png
-
       - name: Update version in snapcraft.yml
         run: |
           sed -i "s/^version: .*/version: '${{ inputs.version_name }}'/" snap/snapcraft.yaml
