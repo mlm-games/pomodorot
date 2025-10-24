@@ -1,5 +1,5 @@
 name: pomodorot
-base: core24
+base: core22
 version: '0.12.1'
 summary: Pomodorot timer with cmdline options support
 description: |
