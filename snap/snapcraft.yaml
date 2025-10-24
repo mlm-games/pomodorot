@@ -1,0 +1,50 @@
+name: pomodorot
+base: core24
+version: '0.12.1'
+summary: Pomodorot timer with cmdline options support
+description: |
+  Pomodoro timer with various timer modes, supports commandline options to autostart timer, etc.
+
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+apps:
+  pomodorot:
+    command: pomodorot
+    extensions: [gnome]
+    plugs:
+      - home
+      - removable-media
+      - network
+      - opengl
+      - x11
+      - wayland
+      - desktop
+      - desktop-legacy
+      - unity7
+    desktop: pomodorot.desktop
+
+parts:
+  imagot:
+    plugin: dump
+    source: ./builds/
+    source-type: local
+    stage-packages:
+      - libglu1-mesa
+      - libxcursor1
+      - libxinerama1
+      - libxrandr2
+      - libxi6
+      - libpulse0
+    override-build: |
+      craftctl default
+      install -Dm644 "$CRAFT_PROJECT_DIR/gui/pomodorot.desktop" "$CRAFT_PART_INSTALL/pomodorot.desktop"
+      chmod +x "$CRAFT_PART_INSTALL/pomodorot"
+
+layout:
+  /usr/share/imagot:
+    bind: $SNAP/usr/share/pomodorot
