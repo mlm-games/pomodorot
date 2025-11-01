@@ -33,9 +33,9 @@ jobs:
         run: |
           mkdir -p snap/builds
           
-          mkdir -p snap/gui
-          cp others/flathub/io.github.mlm_games.pomodorot.desktop snap/gui/pomodorot.desktop
-          cp icon.png snap/gui/icon.png
+          mkdir -p snap/snap/gui
+          cp others/flathub/io.github.mlm_games.pomodorot.desktop snap/snap/gui/pomodorot.desktop
+          cp icon.png snap/snap/gui/icon.png
 
           set -e
           echo "Fetch 'pomodorot.x86_64'..."
