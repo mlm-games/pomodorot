@@ -15,6 +15,14 @@ A simple, customizable Pomodoro timer application built with Godot. Helps you fo
 
 Or download the latest APK from the [Releases Section](https://github.com/mlm-games/pomodorot/releases/latest).
 
+## Screenshots
+
+<div align="center">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="30%">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="30%">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="30%">
+</div>
+
 ## Features
 
 - Pomodoro technique timing with work sessions and breaks
