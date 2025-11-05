@@ -18,9 +18,9 @@ Or download the latest APK from the [Releases Section](https://github.com/mlm-ga
 ## Screenshots
 
 <div align="center">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="30%">
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="30%">
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="30%">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="30%">
 </div>
 
 ## Features
