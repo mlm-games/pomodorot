@@ -1,15 +1,15 @@
-Pomodorot is a timer app which can be used to set 20 minute breaks where you move away from your computer or also can be used as a pomodoro timer. 
+Pomodorot is a timer that can be used for 20-minute breaks during the workday, or as a timer for the Pomodoro Technique.
 
-Currently it's screen blocking capabilities is only available in desktops, but plan to add it as a setting for android
+If you need a timer that pauses the countdown without requiring interaction with the app, this app might be for you.
 
-If you want an app which pauses or doesn't count down when not open directly on the screen (not in background), then this could work for you. .
+Features
 
-Features :
+* Variable time intervals.
+* Minimalistic interface.
+* Easy on the eyes.
+* Open source.
+* Completely ad-free.
 
-	. Variable time options
-	. Minimal
-	. Easy on the eyes
-	. Open source
-	. Fully free with no ads
+Currently, the lock screen feature is only available on desktop, but a corresponding setting for Android is planned (mostly after godot adds an easy way to allow the app to run in the background).
 
-More info on the itch website: https://ragebreaker.itch.io/pomodorot
+For more information, visit itch.io: [https://ragebreaker.itch.io/pomodorot](https://ragebreaker.itch.io/pomodorot).
