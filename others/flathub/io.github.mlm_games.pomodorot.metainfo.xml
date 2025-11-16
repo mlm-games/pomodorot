@@ -52,6 +52,29 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="0.13.1" date="2025-11-16" type="stable">
+      <description>
+        <ul>
+          <li>Add AOD settings (fix #10)</li>
+          <li>Add short break count (fix #11)</li>
+          <li>Update full_description.txt (make it similar to the ru version)</li>
+          <li>Create ru/full_description.txt</li>
+          <li>Create ru/short_description.txt</li>
+          <li>chore: Update README.md</li>
+          <li>Update README.md</li>
+          <li>Update snapcraft.yaml</li>
+          <li>Update snap-upload.yml</li>
+          <li>Update snap-upload.yml</li>
+          <li>Update snapcraft.yaml</li>
+          <li>Update snapcraft.yaml</li>
+          <li>Update snap-upload.yml</li>
+          <li>Update snapcraft.yaml</li>
+          <li>Create snap-upload.yml</li>
+          <li>Update snapcraft.yaml</li>
+          <li>Create snapcraft.yaml</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.12.2" date="2025-10-15">
       <description>
         <ul>
@@ -108,7 +131,7 @@
       <url type="details">https://github.com/mlm-games/pomodorot/releases</url>
     </release>
   </releases>
-  <content_rating type="oars-1.1"></content_rating>
+  <content_rating type="oars-1.1"/>
   <developer id="io.github.mlm_games">
     <name>MLM Games</name>
   </developer>

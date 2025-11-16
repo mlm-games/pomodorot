@@ -1,3 +1,24 @@
+## v0.13.1
+
+- Add AOD settings (fix #10)
+- Add short break count (fix #11)
+- Update full_description.txt (make it similar to the ru version)
+- Create ru/full_description.txt
+- Create ru/short_description.txt
+- chore: Update README.md
+- Update README.md
+- Update snapcraft.yaml
+- Update snap-upload.yml
+- Update snap-upload.yml
+- Update snapcraft.yaml
+- Update snapcraft.yaml
+- Update snap-upload.yml
+- Update snapcraft.yaml
+- Create snap-upload.yml
+- Update snapcraft.yaml
+- Create snapcraft.yaml
+
+
 ## v0.12.2
 
 - hide tray options on linux (godot doesn't support yet, use rbtray)
