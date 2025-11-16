@@ -263,3 +263,6 @@ func _notification(what: int):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		# Don't revert changes, just close the window
 		close_animated()
+	elif what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		# Android back button
+		close_animated()

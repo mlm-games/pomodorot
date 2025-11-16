@@ -109,7 +109,7 @@ func _on_setting_changed(key: String, _value) -> void:
 			_update_aod_mode()
 
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton or event is InputEventScreenTouch:
+	if event is InputEventMouseButton:
 		if event.is_pressed():
 			var current_time = Time.get_ticks_msec() / 1000.0
 			var time_since_last_tap = current_time - last_tap_time
@@ -121,6 +121,9 @@ func _gui_input(event: InputEvent) -> void:
 			else:
 				# First tap
 				last_tap_time = current_time
+	elif event is InputEventScreenTouch:
+		if event.double_tap:
+			Settings.set_setting("aod_mode_enabled", false)
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.is_pressed():
@@ -269,5 +272,4 @@ func _notification(what: int) -> void:
 				get_tree().quit()
 
 		NOTIFICATION_WM_GO_BACK_REQUEST:
-			get_tree().quit()
-			
+			pass
