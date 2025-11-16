@@ -1,5 +1,7 @@
 extends Control
 
+const DOUBLE_TAP_THRESHOLD: float = 0.3  # secs
+
 @onready var time_label: Label = %TimeLabel
 @onready var status_label: Label = %StatusLabel
 @onready var progress_bar: ProgressBar = %ProgressBar
@@ -12,6 +14,7 @@ extends Control
 
 @onready var aod_label: Label = %AodLabel
 
+var last_tap_time: float = 0.0
 var notification_manager: Node
 var aod_tween: Tween
 
@@ -107,7 +110,17 @@ func _on_setting_changed(key: String, _value) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton or event is InputEventScreenTouch:
-		Settings.set_setting("aod_mode_enabled", false)
+		if event.is_pressed():
+			var current_time = Time.get_ticks_msec() / 1000.0
+			var time_since_last_tap = current_time - last_tap_time
+			
+			if time_since_last_tap < DOUBLE_TAP_THRESHOLD:
+				# Double tap detected
+				Settings.set_setting("aod_mode_enabled", false)
+				last_tap_time = 0.0  # Reset to prevent triple-tap issues
+			else:
+				# First tap
+				last_tap_time = current_time
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.is_pressed():
@@ -257,3 +270,4 @@ func _notification(what: int) -> void:
 
 		NOTIFICATION_WM_GO_BACK_REQUEST:
 			get_tree().quit()
+			
