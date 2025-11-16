@@ -20,6 +20,7 @@ var is_paused: bool = false
 var cycle_count: int = 0
 var no_popups_and_sound: bool = false
 var prev_window_mode: int = -1 # -1 -> “unset”
+var current_break_in_series: int = 0
 
 # Timer durations (secs)
 var work_duration: int = 25 * 60
@@ -143,14 +144,17 @@ func _advance_timer_type() -> void:
 			if cycle_count >= long_break_interval:
 				current_timer_type = TimerType.LONG_BREAK
 				cycle_count = 0
+				current_break_in_series = 0  # Reset after long break
 			else:
 				current_timer_type = TimerType.SHORT_BREAK
+				current_break_in_series = cycle_count  # 1, 2, 3...
 		TimerType.SHORT_BREAK, TimerType.LONG_BREAK:
 			current_timer_type = TimerType.WORK
 
 func reset_cycle_count() -> void:
 	if not is_running:
 		cycle_count = 0
+		current_break_in_series = 0
 		current_timer_type = TimerType.WORK
 
 func _increment_pomodoro_count() -> void:

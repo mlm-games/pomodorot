@@ -66,15 +66,17 @@ func _on_timer_updated(time_left: int, total_time: int) -> void:
 	_update_ui(time_left, total_time)
 
 func _on_timer_started(timer_type: TimerManager.TimerType) -> void:
-	var work_color = Color.from_string("#66bb6a", Color.GREEN)
-	var break_color = Color.from_string("#42a5f5", Color.BLUE)
+	var work_color = Color.from_string("#66bb6a", Color.GREEN) #TODO: Delegate to theme later
+	var break_color = Color.from_string("#42a5f5", Color.BLUE) 
 
 	match timer_type:
 		TimerManager.TimerType.WORK:
 			status_label.text = "Working"
 			progress_bar.self_modulate = work_color
 		TimerManager.TimerType.SHORT_BREAK:
-			status_label.text = "Short Break"
+			var break_num = TimerManager.current_break_in_series
+			var total_breaks = TimerManager.long_break_interval - 1
+			status_label.text = "Short Break %d/%d" % [break_num, total_breaks]
 			progress_bar.self_modulate = break_color
 		TimerManager.TimerType.LONG_BREAK:
 			status_label.text = "Long Break"
