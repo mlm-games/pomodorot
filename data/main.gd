@@ -10,11 +10,12 @@ extends Control
 
 @onready var counter_label: Label = %CounterLabel
 
+@onready var aod_label: Label = %AodLabel
+
 var notification_manager: Node
+var aod_tween: Tween
 
 func _ready() -> void:
-	# HACK: Settings are now loaded and applied automatically by the Settings singleton.
-
 	notification_manager = preload("uid://dfsq5txsl3uwg").new()
 	add_child(notification_manager)
 
@@ -27,11 +28,73 @@ func _ready() -> void:
 
 	# Connect to setting changes to update UI elements that depend on them.
 	Settings.setting_changed.connect(_on_setting_changed)
+	_setup_aod_mode()
 
 	_update_ui(0, 0)
 	_set_timer_inactive_state()
 	_update_counter_visibility()
 
+func _setup_aod_mode() -> void:
+	
+	_update_aod_mode()
+
+func _update_aod_mode() -> void:
+	
+	var aod_enabled = Settings.get_setting("aod_mode_enabled")
+	
+	if aod_enabled:
+		DisplayServer.screen_set_keep_on(true)
+		
+		aod_label.visible = true
+		time_label = aod_label
+		%TimeLabel.visible = false
+		%StatusLabel.visible = false
+		%ProgressBar.visible = false
+		%CounterLabel.visible = false
+		get_node("Panel/VBoxContainer/HBoxContainer").visible = false
+		get_node("Panel/VBoxContainer/BottomButtonContainer").visible = false
+		
+		_start_aod_animation()
+	else:
+		DisplayServer.screen_set_keep_on(false)
+		
+		aod_label.visible = false
+		time_label = %TimeLabel
+		%TimeLabel.visible = true
+		%StatusLabel.visible = true
+		%ProgressBar.visible = true
+		get_node("Panel/VBoxContainer/HBoxContainer").visible = true
+		get_node("Panel/VBoxContainer/BottomButtonContainer").visible = true
+		_update_counter_visibility()
+		
+		_stop_aod_animation()
+
+
+func _start_aod_animation() -> void:
+	if aod_tween:
+		aod_tween.kill()
+	
+	_animate_aod_position()
+
+func _animate_aod_position() -> void:
+	var screen_size = get_viewport_rect().size
+	var margin = 200  # Keep away from edges (text goes offscreen)
+	
+	var target_x = randf_range(margin, screen_size.x - margin)
+	var target_y = randf_range(margin, screen_size.y - margin)
+	
+	aod_tween = create_tween()
+	var duration = Settings.get_setting("aod_animation_speed")
+	
+	aod_tween.tween_property(aod_label, "position", Vector2(target_x, target_y), duration)\
+		.set_trans(Settings.get_setting("aod_animation_trans"))\
+		.set_ease(Settings.get_setting("aod_animation_ease"))
+	aod_tween.tween_callback(_animate_aod_position)
+
+func _stop_aod_animation() -> void:
+	if aod_tween:
+		aod_tween.kill()
+		aod_tween = null
 
 func _on_setting_changed(key: String, _value) -> void:
 	match key:
@@ -39,7 +102,12 @@ func _on_setting_changed(key: String, _value) -> void:
 			_update_ui(TimerManager.time_left, TimerManager.total_time)
 		"show_pomodoro_counter", "pomodoro_count":
 			_update_counter_visibility()
+		"aod_mode_enabled", "aod_animation_speed":
+			_update_aod_mode()
 
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton or event is InputEventScreenTouch:
+		Settings.set_setting("aod_mode_enabled", false)
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event is InputEventKey or not event.is_pressed():
@@ -61,9 +129,16 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			if not reset_button.disabled:
 				_on_reset_button_pressed()
 				get_viewport().set_input_as_handled()
+		KEY_A:
+			Settings.set_setting("aod_mode_enabled", !Settings.get_setting("aod_mode_enabled"))
+
 
 func _on_timer_updated(time_left: int, total_time: int) -> void:
 	_update_ui(time_left, total_time)
+	
+	if Settings.get_setting("aod_mode_enabled") and OS.get_name().to_lower() == "android":
+		var minutes := int(ceil(time_left / 60.0))
+		aod_label.text = "%d" % minutes
 
 func _on_timer_started(timer_type: TimerManager.TimerType) -> void:
 	var work_color = Color.from_string("#66bb6a", Color.GREEN) #TODO: Delegate to theme later
@@ -117,7 +192,7 @@ func _update_ui(time_left: int, total_time: int) -> void:
 			time_label.text = "%02d:%02d" % [minutes, seconds]
 
 	if total_time > 0:
-		progress_bar.value = ((total_time - time_left) / float(total_time)) * 100.0
+		progress_bar.value = lerpf(progress_bar.value, (total_time - time_left) / float(total_time) * 100.0, 0.05)
 	else:
 		progress_bar.value = 100.0
 

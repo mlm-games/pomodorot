@@ -46,15 +46,6 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 	"label": "Autosave Settings",
 	"description": "Automatically save settings when changed"
 	},
-	theme_uid = {
-		"type": "option", "default": "", "section": "general", "label": "Theme",
-		"description": "Visual appearance of the app",
-		"options": {
-			"default": "", "one_dark": "uid://bh8bmd0min05g", "nord": "uid://clnfuh3cw3v6b",
-			"material": "uid://bnfada7k74amo", "green_prod": "uid://ymbk3h18s8kr", "dracula": "uid://d2dc175aatida",
-			"dark_solarised": "uid://bhn4h7qu80ytq", "dark": "uid://cjiej4kk0y2t1", "modern_with_shadows_and_inter": "uid://bqm8k7n3x4p2t"
-		}
-	},
 	uncover_when_skipped = {
 		"type": "bool", "default": false, "section": "general", "advanced": true,
 		"label": "Allow Uncovering When Skipped",
@@ -85,6 +76,15 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"type": "bool", "default": false, "section": "general", "advanced": true,
 		"label": "Play Tick Sound For Last 10 Seconds",
 		"description": "Only plays the tick sound during the final countdown"
+	},
+	theme_uid = {
+		"type": "option", "default": "", "section": "general", "label": "Theme",
+		"description": "Visual appearance of the app",
+		"options": {
+			"default": "", "one_dark": "uid://bh8bmd0min05g", "nord": "uid://clnfuh3cw3v6b",
+			"material": "uid://bnfada7k74amo", "green_prod": "uid://ymbk3h18s8kr", "dracula": "uid://d2dc175aatida",
+			"dark_solarised": "uid://bhn4h7qu80ytq", "dark": "uid://cjiej4kk0y2t1", "modern_with_shadows_and_inter": "uid://bqm8k7n3x4p2t"
+		}
 	},
 	content_scale_factor = {
 		"type": "float", "default": 1.0, "section": "general", "advanced": true,
@@ -156,6 +156,47 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"type": "int", "default": 4, "section": "timer",
 		"label": "Long Break After (cycles)", "description": "Number of work sessions before a long break",
 		"min": 1, "max": 10, "step": 1
+	},
+	aod_mode_enabled = {
+		"type": "bool", "default": false, "section": "general",
+		"label": "Always On Display Mode",
+		"description": "Keeps screen on with minimal display to prevent burn-in (for OLEDs)",
+		"platforms": ["android", "linux"]
+	},
+	aod_animation_trans = {
+		"type": "option", "default": Tween.TRANS_SINE, "section": "general", "advanced": true,
+		"label": "AOD Animation Transition",
+		"description": "Animation curve type for position changes",
+		"options": {
+			"Linear": Tween.TRANS_LINEAR,
+			"Sine": Tween.TRANS_SINE,
+			"Quad": Tween.TRANS_QUAD,
+			"Cubic": Tween.TRANS_CUBIC,
+			"Elastic": Tween.TRANS_ELASTIC,
+			"Back": Tween.TRANS_BACK,
+			"Bounce": Tween.TRANS_BOUNCE,
+			"Spring": Tween.TRANS_SPRING,
+		},
+		"depends_on": "aod_mode_enabled"
+	},
+	aod_animation_ease = {
+		"type": "option", "default": Tween.EASE_IN_OUT, "section": "general", "advanced": true,
+		"label": "AOD Animation Easing",
+		"description": "Animation easing type for position changes",
+		"options": {
+			"In": Tween.EASE_IN,
+			"Out": Tween.EASE_OUT,
+			"In-Out": Tween.EASE_IN_OUT,
+			"Out-In": Tween.EASE_OUT_IN,
+		},
+		"depends_on": "aod_mode_enabled"
+	},
+	aod_animation_speed = {
+		"type": "float", "default": 2.0, "section": "general", "advanced": true,
+		"label": "AOD Animation Speed (seconds)",
+		"description": "How often the display moves to prevent burn-in",
+		"min": 1.0, "max": 10.0, "step": 0.5,
+		"depends_on": "aod_mode_enabled"
 	},
 }
 

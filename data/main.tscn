@@ -19,6 +19,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="ModalOverlay" type="ColorRect" parent="Panel"]
@@ -29,6 +30,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
 [node name="CounterLabel" type="Label" parent="Panel"]
@@ -47,6 +49,26 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 18
 text = "Pomodoros: 0"
+horizontal_alignment = 1
+
+[node name="AodLabel" type="Label" parent="Panel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -233.0
+offset_right = 60.0
+offset_bottom = -207.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_font_sizes/font_size = 72
+text = "00:00"
 horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
@@ -75,6 +97,7 @@ horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="Panel/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 value = 100.0
 show_percentage = false
@@ -121,6 +144,7 @@ layout_mode = 2
 text = "Reset"
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="BottomButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
