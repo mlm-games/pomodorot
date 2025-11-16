@@ -19,9 +19,9 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"label": "Auto-start Break Timer",
 		"description": "Automatically starts a break timer after work ends"
 	},
-	desktop_notifications = {
+	timer_alerts = {
 		"type": "bool", "default": true, "section": "general", 
-		"label": "Desktop Notifications",
+		"label": "Timer Alerts",
 		"description": "Shows notifications when timers end"
 	},
 	minimize_to_tray = {
@@ -195,7 +195,7 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 		"type": "float", "default": 2.0, "section": "general", "advanced": true,
 		"label": "AOD Animation Speed (seconds)",
 		"description": "How often the display moves to prevent burn-in",
-		"min": 1.0, "max": 10.0, "step": 0.5,
+		"min": 1.0, "max": 200.0, "step": 0.5,
 		"depends_on": "aod_mode_enabled"
 	},
 }
