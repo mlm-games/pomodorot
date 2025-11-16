@@ -52,6 +52,15 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="0.13.2" date="2025-11-16" type="stable">
+      <description>
+        <ul>
+          <li>disable android back button quitting, other functions do not seem to work yet (#12)</li>
+          <li>add double tap to exit AOD mode</li>
+          <li>rename "desktop notifications" to "timer alerts" and increase max anim speed value (fix #13)</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.13.1" date="2025-11-16" type="stable">
       <description>
         <ul>

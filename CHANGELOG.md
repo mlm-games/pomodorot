@@ -1,3 +1,10 @@
+## v0.13.2
+
+- disable android back button quitting, other functions do not seem to work yet (#12)
+- add double tap to exit AOD mode
+- rename "desktop notifications" to "timer alerts" and increase max anim speed value (fix #13)
+
+
 ## v0.13.1
 
 - Add AOD settings (fix #10)
