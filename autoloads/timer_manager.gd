@@ -45,7 +45,7 @@ func _process(_delta: float) -> void:
 		time_left = max(timer.time_left, 0.0)
 		timer_updated.emit(int(time_left), int(total_time))
 
-func _on_setting_changed(key: String, value) -> void:
+func _on_setting_changed(key: String, value: int) -> void:
 	match key:
 		"work_duration":
 			work_duration = int(value * 60)

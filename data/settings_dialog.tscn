@@ -11,7 +11,7 @@
 [node name="SettingsDialog" type="Window"]
 oversampling_override = 1.0
 title = "Settings"
-initial_position = 2
+position = Vector2i(100, 100)
 size = Vector2i(400, 600)
 exclusive = true
 theme = ExtResource("1_ja8r2")

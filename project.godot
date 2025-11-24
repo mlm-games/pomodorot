@@ -25,6 +25,7 @@ CommandLine="*res://autoloads/command_line.gd"
 Settings="*res://autoloads/settings.gd"
 TimerManager="*res://autoloads/timer_manager.gd"
 SoundManager="*res://data/sound_manager.gd"
+AndroidServiceManager="*res://autoloads/android_service_manager.gd"
 TrayManager="*res://autoloads/tray_manager.gd"
 
 [debug]
@@ -39,7 +40,7 @@ window/handheld/orientation=5
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/NotificationSchedulerPlugin/plugin.cfg")
 
 [rendering]
 

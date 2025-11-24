@@ -232,7 +232,7 @@ func load_settings() -> void:
 		save_settings() # Save defaults on first run
 		return
 	for key in SETTINGS_METADATA:
-		var metadata = SETTINGS_METADATA[key]
+		var metadata := SETTINGS_METADATA[key]
 		values[key] = config.get_value(metadata.section, key, metadata.default)
 
 func _apply_settings() -> void:
