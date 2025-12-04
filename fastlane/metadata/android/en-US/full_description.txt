@@ -12,4 +12,4 @@ Features
 
 Currently, the lock screen feature is only available on desktop, but a corresponding setting for Android is planned (mostly after godot adds an easy way to allow the app to run in the background).
 
-For more information, visit itch.io: [https://ragebreaker.itch.io/pomodorot](https://ragebreaker.itch.io/pomodorot).
+For more information, visit itch.io: <a href="https://ragebreaker.itch.io/pomodorot">https://ragebreaker.itch.io/pomodorot</a>.
