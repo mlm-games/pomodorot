@@ -6,11 +6,6 @@ on:
       version_name:
         description: 'Version name (e.g., 0.7.2)'
         required: true
-      increment_pkgrel:
-        description: 'Increment pkgrel (for same version updates)'
-        required: false
-        default: false
-        type: boolean
 
 jobs:
   update-aur:
@@ -36,26 +31,6 @@ jobs:
           echo "x64_hash=$X64_HASH" >> $GITHUB_OUTPUT
           echo "arm64_hash=$ARM64_HASH" >> $GITHUB_OUTPUT
       
-      - name: Get current pkgrel from AUR
-        id: current_pkgrel
-        run: |
-          # Try to get current PKGBUILD from AUR
-          CURRENT_PKGREL=$(curl -s "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pomodorot-bin" | grep "^pkgrel=" | cut -d= -f2 || echo "0")
-          echo "current_pkgrel=$CURRENT_PKGREL" >> $GITHUB_OUTPUT
-        continue-on-error: true
-      
-      - name: Determine pkgrel
-        id: pkgrel
-        run: |
-          if [[ "${{ inputs.increment_pkgrel }}" == "true" ]]; then
-            CURRENT=${{ steps.current_pkgrel.outputs.current_pkgrel }}
-            NEW_PKGREL=$((CURRENT + 1))
-            echo "pkgrel=$NEW_PKGREL" >> $GITHUB_OUTPUT
-          else
-            echo "pkgrel=1" >> $GITHUB_OUTPUT
-          fi
-
-      
       - name: Create PKGBUILD
         run: |
           mkdir -p aur-package
@@ -63,7 +38,7 @@ jobs:
           # Maintainer: MLM-stuff <gfxoxinzh@mozmail.com>
           pkgname=pomodorot-bin
           pkgver=${{ inputs.version_name }}
-          pkgrel=${{ steps.pkgrel.outputs.pkgrel }}
+          pkgrel=1
           pkgdesc="A simple pomodoro timer application (binary release)"
           arch=('x86_64' 'aarch64')
           url="https://github.com/mlm-games/pomodorot"
@@ -116,7 +91,8 @@ jobs:
         with:
           pkgname: pomodorot-bin
           pkgbuild: aur-package/PKGBUILD
+          auto_pkgrel: 'true'
           commit_username: MLM-stuff
           commit_email: gfxoxinzh@mozmail.com
           ssh_private_key: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
-          commit_message: "Update to version ${{ inputs.version_name }}-${{ steps.pkgrel.outputs.pkgrel }}"
+          commit_message: "Update to version ${{ inputs.version_name }}"
