@@ -1,3 +1,12 @@
+## v0.13.3
+
+- set process mode to always to check if it fixes it (#15)
+- update to 4.6
+- Update and rename test-aur-upload.yml to aur-upload.yml
+- Update full_description.txt
+- Update full_description.txt
+
+
 ## v0.13.2
 
 - disable android back button quitting, other functions do not seem to work yet (#12)

@@ -52,6 +52,17 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="0.13.3" date="2026-02-16" type="stable">
+      <description>
+        <ul>
+          <li>set process mode to always to check if it fixes it (#15)</li>
+          <li>update to 4.6</li>
+          <li>Update and rename test-aur-upload.yml to aur-upload.yml</li>
+          <li>Update full_description.txt</li>
+          <li>Update full_description.txt</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.13.2" date="2025-11-16" type="stable">
       <description>
         <ul>
