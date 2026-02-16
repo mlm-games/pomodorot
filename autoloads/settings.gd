@@ -203,7 +203,7 @@ const SETTINGS_METADATA : Dictionary[StringName, Dictionary] = {
 
 const SETTINGS_PATH = "user://settings.cfg"
 
-var values = {}
+var values := {}
 signal setting_changed(key, value)
 
 func _init() -> void:
@@ -219,37 +219,37 @@ func _ready() -> void:
 	_apply_settings()
 
 func save_settings() -> void:
-	var config = ConfigFile.new()
+	var config := ConfigFile.new()
 	for key in values:
-		var metadata = SETTINGS_METADATA[key]
+		var metadata := SETTINGS_METADATA[key]
 		config.set_value(metadata.section, key, values[key])
 	config.save(SETTINGS_PATH)
 
 func load_settings() -> void:
-	var config = ConfigFile.new()
-	var error = config.load(SETTINGS_PATH)
+	var config := ConfigFile.new()
+	var error := config.load(SETTINGS_PATH)
 	if error != OK:
 		save_settings() # Save defaults on first run
 		return
 	for key in SETTINGS_METADATA:
-		var metadata = SETTINGS_METADATA[key]
+		var metadata := SETTINGS_METADATA[key]
 		values[key] = config.get_value(metadata.section, key, metadata.default)
 
 func _apply_settings() -> void:
-	var on_top_supported = OS.has_feature("windows") or OS.has_feature("macos") or OS.has_feature("linux")
+	var on_top_supported := OS.has_feature("windows") or OS.has_feature("macos") or OS.has_feature("linux")
 	if on_top_supported:
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, values.always_on_top)
 
 	if OS.has_feature("pc"):
-		var current_mode = DisplayServer.window_get_mode()
+		var current_mode := DisplayServer.window_get_mode()
 		if current_mode != DisplayServer.WINDOW_MODE_MAXIMIZED and current_mode != DisplayServer.WINDOW_MODE_FULLSCREEN:
 			if values.window_size != Vector2i(-1, -1):
 				DisplayServer.window_set_size(values.window_size)
 			if values.window_position != Vector2i(-1, -1):
 				DisplayServer.window_set_position(values.window_position)
 			else:
-				var screen_size = DisplayServer.screen_get_size()
-				var window_size = DisplayServer.window_get_size()
+				var screen_size := DisplayServer.screen_get_size()
+				var window_size := DisplayServer.window_get_size()
 				DisplayServer.window_set_position(screen_size / 2 - window_size / 2)
 
 	get_tree().root.set_content_scale_factor(values.content_scale_factor)
@@ -258,7 +258,7 @@ func _apply_settings() -> void:
 func get_setting(key: String):
 	return values[key]
 
-func set_setting(key: String, value):
+func set_setting(key: String, value) -> void:
 	values[key] = value
 	setting_changed.emit(key, value)
 	
@@ -266,9 +266,9 @@ func set_setting(key: String, value):
 	if values.get("autosave_enabled", true) and key != "autosave_enabled":
 		save_settings()
 
-func save_window_state():
+func save_window_state() -> void:
 	if OS.has_feature("pc"):
-		var current_mode = DisplayServer.window_get_mode()
+		var current_mode := DisplayServer.window_get_mode()
 		# Only save position/size if window is in normal windowed mode (to prevent maximised being the only size)
 		if current_mode == DisplayServer.WINDOW_MODE_WINDOWED:
 			set_setting("window_position", DisplayServer.window_get_position())

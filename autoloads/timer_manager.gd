@@ -29,6 +29,8 @@ var long_break_duration: int = 15 * 60
 var long_break_interval: int = 4
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
 	CommandLine.no_popups_and_sound_requested.connect(_on_no_popups_and_sound_requested)
 	CommandLine.start_timer_requested.connect(_on_start_timer_requested)
 
