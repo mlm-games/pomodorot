@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://xwgfdfp0i4u0"]
+[gd_scene format=3 uid="uid://xwgfdfp0i4u0"]
 
 [ext_resource type="Script" uid="uid://bu2mbyrsocpnu" path="res://data/main.gd" id="1_f0jm3"]
 [ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/anim_buttons/anim_button.gd" id="2_s0khs"]
 
-[node name="Main" type="Control"]
+[node name="Main" type="Control" unique_id=1306507017]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f0jm3")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1406011308]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +22,7 @@ grow_vertical = 2
 mouse_filter = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ModalOverlay" type="ColorRect" parent="Panel"]
+[node name="ModalOverlay" type="ColorRect" parent="Panel" unique_id=1133363427]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -33,7 +33,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
-[node name="CounterLabel" type="Label" parent="Panel"]
+[node name="CounterLabel" type="Label" parent="Panel" unique_id=1367053427]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -51,7 +51,7 @@ theme_override_font_sizes/font_size = 18
 text = "Pomodoros: 0"
 horizontal_alignment = 1
 
-[node name="AodLabel" type="Label" parent="Panel"]
+[node name="AodLabel" type="Label" parent="Panel" unique_id=1241982095]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -71,7 +71,7 @@ theme_override_font_sizes/font_size = 72
 text = "00:00"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1987491029]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,32 +81,32 @@ grow_vertical = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="TimeLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="TimeLabel" type="Label" parent="Panel/VBoxContainer" unique_id=435974358]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "25:00"
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="Panel/VBoxContainer" unique_id=599937874]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Ready"
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="Panel/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="Panel/VBoxContainer" unique_id=450374687]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 value = 100.0
 show_percentage = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=325556371]
 layout_mode = 2
 alignment = 1
 
-[node name="StartPauseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="StartPauseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1979711211]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
@@ -116,7 +116,7 @@ text = "Start"
 script = ExtResource("2_s0khs")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="StopButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="StopButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=955268209]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
@@ -127,7 +127,7 @@ text = "Stop"
 script = ExtResource("2_s0khs")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="SkipButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="SkipButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=442407870]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
@@ -137,21 +137,21 @@ text = "Skip"
 script = ExtResource("2_s0khs")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="ResetButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="ResetButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1359159219]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 text = "Reset"
 
-[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer" unique_id=81698613]
 visible = false
 layout_mode = 2
 
-[node name="BottomButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="BottomButtonContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1431948899]
 layout_mode = 2
 alignment = 1
 
-[node name="SettingsButton" type="Button" parent="Panel/VBoxContainer/BottomButtonContainer"]
+[node name="SettingsButton" type="Button" parent="Panel/VBoxContainer/BottomButtonContainer" unique_id=2045841868]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cs2fl7pw33da1"]
+[gd_scene format=3 uid="uid://cs2fl7pw33da1"]
 
 [ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/anim_buttons/anim_button.gd" id="1_s85m3"]
 
@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5b6ss"]
 
-[node name="Button" type="Button"]
+[node name="Button" type="Button" unique_id=688500501]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -22,7 +22,7 @@ pivot_offset = Vector2(4, 4)
 size_flags_vertical = 4
 script = ExtResource("1_s85m3")
 
-[node name="MovementParticles2D" type="CPUParticles2D" parent="."]
+[node name="MovementParticles2D" type="CPUParticles2D" parent="." unique_id=1245849133]
 visible = false
 position = Vector2(294, 278)
 amount = 16
@@ -35,7 +35,7 @@ scale_amount_max = 2.0
 color = Color(1, 1, 1, 0.1)
 color_ramp = SubResource("Gradient_s85m3")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=601423259]
 visible = false
 material = SubResource("ShaderMaterial_5b6ss")
 layout_mode = 0
@@ -43,5 +43,5 @@ offset_right = 40.0
 offset_bottom = 29.0
 text = "hihi"
 
-[node name="HoverSound" type="AudioStreamPlayer" parent="."]
+[node name="HoverSound" type="AudioStreamPlayer" parent="." unique_id=1534680077]
 volume_db = -13.37

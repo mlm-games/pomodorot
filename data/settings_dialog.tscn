@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://caujng1xfp8u3"]
+[gd_scene format=3 uid="uid://caujng1xfp8u3"]
 
 [ext_resource type="Script" uid="uid://ba32n6yrglwhf" path="res://data/settings_dialog.gd" id="1_8n4p2"]
 [ext_resource type="Theme" uid="uid://ntnplf46rp70" path="res://misc/theme.tres" id="1_ja8r2"]
@@ -8,7 +8,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bj60q"]
 
-[node name="SettingsDialog" type="Window"]
+[node name="SettingsDialog" type="Window" unique_id=1450650765]
 oversampling_override = 1.0
 title = "Settings"
 initial_position = 2
@@ -20,7 +20,7 @@ theme_override_styles/embedded_border = SubResource("StyleBoxFlat_ja8r2")
 theme_override_styles/embedded_unfocused_border = SubResource("StyleBoxFlat_bj60q")
 script = ExtResource("1_8n4p2")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=16359945]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,7 +31,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="Panel" parent="Control"]
+[node name="Panel" type="Panel" parent="Control" unique_id=961360401]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -41,7 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/Panel" unique_id=1848592529]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,7 +52,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/Panel/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/Panel/ScrollContainer" unique_id=1544364593]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -61,71 +61,71 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer" unique_id=11848720]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=92779325]
 layout_mode = 2
 text = "General Settings"
 horizontal_alignment = 1
 
-[node name="GeneralSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="GeneralSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1228614823]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/GeneralSettings" unique_id=1672859531]
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1486310560]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=702606727]
 layout_mode = 2
 text = "Sound Settings"
 horizontal_alignment = 1
 
-[node name="SoundSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="SoundSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=968450830]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/SoundSettings"]
+[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/SoundSettings" unique_id=2136060900]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1197531945]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="Label3" type="Label" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1204654700]
 layout_mode = 2
 text = "Timer Settings"
 horizontal_alignment = 1
 
-[node name="TimerSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="TimerSettings" type="VBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=743262739]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings"]
+[node name="Control" type="Control" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/TimerSettings" unique_id=1523314251]
 layout_mode = 2
 
-[node name="HSeparator3" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="HSeparator3" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=427400307]
 layout_mode = 2
 
-[node name="HSeparator4" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="HSeparator4" type="HSeparator" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=167789777]
 layout_mode = 2
 
-[node name="AdvancedSettingsCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="AdvancedSettingsCheck" type="CheckButton" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1384421983]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Advanced Settings"
 
-[node name="ButtonContainer" type="HBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="ButtonContainer" type="HBoxContainer" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer" unique_id=720156710]
 layout_mode = 2
 alignment = 1
 
-[node name="SaveButton" type="Button" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/ButtonContainer"]
+[node name="SaveButton" type="Button" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/ButtonContainer" unique_id=840115708]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 size_flags_vertical = 4
@@ -133,7 +133,7 @@ text = "Save"
 script = ExtResource("3_bj60q")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="CancelButton" type="Button" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/ButtonContainer"]
+[node name="CancelButton" type="Button" parent="Control/Panel/ScrollContainer/MarginContainer/VBoxContainer/ButtonContainer" unique_id=1844867114]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 size_flags_vertical = 4
