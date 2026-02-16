@@ -2,10 +2,6 @@
 
 - set process mode to always to check if it fixes it (#15)
 - update to 4.6
-- Update and rename test-aur-upload.yml to aur-upload.yml
-- Update full_description.txt
-- Update full_description.txt
-
 
 ## v0.13.2
 
