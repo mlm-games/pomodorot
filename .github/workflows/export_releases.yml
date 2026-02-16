@@ -296,11 +296,10 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'test-aur-upload.yml',
+              workflow_id: 'aur-upload.yml',
               ref: 'main',
               inputs: {
                 version_name: '${{ inputs.version_name }}',
-                increment_pkgrel: 'false'
               }
             });
             
